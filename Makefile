@@ -1,5 +1,5 @@
 buildLocal:
-	docker build --build-arg GH_TOKEN=$(token)  -t athena/modules/target:latest .
+	docker build --build-arg GH_TOKEN=$(token) -e DEBUG=1 -t athena/modules/target:latest .
 
 build:
 	docker build --build-arg GH_TOKEN=$(token)  -t registry.digitalocean.com/athenabot/modules/target:latest .
