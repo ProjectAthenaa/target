@@ -64,7 +64,7 @@ func (tk *Task) Login() {
 	headers, err := shapeClient.GenHeaders(tk.Ctx, &shape.Site{Value: shape.SITE_TARGET})
 	if err != nil {
 		log.Error("shape gen: ", err)
-		tk.SetStatus(module.STATUS_ERROR, "", "error generating shape headers")
+		tk.SetStatus(module.STATUS_ERROR, "error generating shape headers")
 	}
 
 	var hdrs fasttls.Headers

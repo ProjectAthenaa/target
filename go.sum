@@ -35,6 +35,8 @@ github.com/ProjectAthenaa/shape v0.0.0-20210830220703-7179a5601742/go.mod h1:7iO
 github.com/ProjectAthenaa/sonic-core v0.0.0-20210830214837-b88c80ff403f/go.mod h1:QTOHLj2jXqfGiUjUaQVxGd6JZs9RhAN8uINqlS4YArw=
 github.com/ProjectAthenaa/sonic-core v0.0.0-20210831083719-8c91bfe0dd76 h1:E50/A9GT97thZCm4alKjb/NvkfxOBTDVwmWSmLZp/vI=
 github.com/ProjectAthenaa/sonic-core v0.0.0-20210831083719-8c91bfe0dd76/go.mod h1:QTOHLj2jXqfGiUjUaQVxGd6JZs9RhAN8uINqlS4YArw=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210831085637-1661f4acda77 h1:qkYgcxQTBt4FzSEKV42U5CRdSFd5Z/YEz+hIOL0WgTY=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210831085637-1661f4acda77/go.mod h1:QTOHLj2jXqfGiUjUaQVxGd6JZs9RhAN8uINqlS4YArw=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210822013215-426a286d6502 h1:10rdawMK9xVT7I1G9L/ffSBSe3I5MFxCcw6wiGBw1hE=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210822013215-426a286d6502/go.mod h1:QEm/mffePQ+wpJYSiw6sAHyflNRW24O+C9VcQIpI5DI=
 github.com/Shopify/goreferrer v0.0.0-20181106222321-ec9c9a553398/go.mod h1:a1uqRtAwp2Xwc6WNPJEufxJ7fx3npB4UV/JOLmbu5I0=
