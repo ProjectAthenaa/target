@@ -5,8 +5,6 @@ RUN git config --global url."https://${GH_TOKEN}:x-oauth-basic@github.com/Projec
 RUN mkdir /app
 ADD . /app
 WORKDIR /app
-RUN --mount=type=cache,target=/root/.cache/go-build
-RUN go mod download
 RUN go build -ldflags "-s -w" -o target
 
 
