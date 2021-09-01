@@ -26,7 +26,7 @@ type StockInfo struct {
 }
 
 func (tk *Task) InitData(){
-	req, err := tk.NewRequest("GET", tk.product.Link, nil)
+	req, err := tk.NewRequest("GET", *tk.Data.TaskData.Link, nil)
 	if err != nil{
 		tk.SetStatus(module.STATUS_ERROR, "could not fetch product page")
 		tk.Stop()
