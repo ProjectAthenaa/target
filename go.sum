@@ -28,8 +28,8 @@ github.com/DataDog/zstd v1.4.8/go.mod h1:g4AWEaM3yOg3HYfnJ3YIawPnVdXJh9QME85blwS
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/ProjectAthenaa/shape v0.0.0-20210830220703-7179a5601742 h1:BgD4CT/+EhfBIknK5uIPJD46d9cwwfvr2V31eMB8Mv4=
 github.com/ProjectAthenaa/shape v0.0.0-20210830220703-7179a5601742/go.mod h1:7iOCHcAp2mdHxjtY9uf4dew3qbrBtO4Xj4i1LRu87W4=
-github.com/ProjectAthenaa/sonic-core v0.0.0-20210901172754-9a94f4130c66 h1:6PVttvqPXAENHIxPA0qqVNxpNDO2+UG83JQLRL4KFIg=
-github.com/ProjectAthenaa/sonic-core v0.0.0-20210901172754-9a94f4130c66/go.mod h1:QTOHLj2jXqfGiUjUaQVxGd6JZs9RhAN8uINqlS4YArw=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210830214837-b88c80ff403f h1:OSEp5LxDPYUvlIWSNKFck90SMh+BBVlAHcWtJYslx4Y=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210830214837-b88c80ff403f/go.mod h1:QTOHLj2jXqfGiUjUaQVxGd6JZs9RhAN8uINqlS4YArw=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210901174054-3eba8b21500c h1:BQ/GMFPOrSIDUTCtKue5PSWlH1kBy3DPfWDTK8/PHtE=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210901174054-3eba8b21500c/go.mod h1:QEm/mffePQ+wpJYSiw6sAHyflNRW24O+C9VcQIpI5DI=
 github.com/agnivade/levenshtein v1.0.1/go.mod h1:CURSv5d9Uaml+FovSIICkLbAUZ9S4RqaHDIsdSBg7lM=

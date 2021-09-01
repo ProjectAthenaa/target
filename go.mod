@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/ProjectAthenaa/shape v0.0.0-20210830220703-7179a5601742
-	github.com/ProjectAthenaa/sonic-core v0.0.0-20210901172754-9a94f4130c66
+	github.com/ProjectAthenaa/sonic-core v0.0.0-20210830214837-b88c80ff403f
 	github.com/ProjectAthenaa/threatmatrix v0.0.0-20210901174054-3eba8b21500c
 	github.com/json-iterator/go v1.1.11
 	github.com/prometheus/common v0.4.0
