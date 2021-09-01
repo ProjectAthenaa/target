@@ -2,16 +2,17 @@ package main
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
-	"github.com/ProjectAthenaa/sonic-core/sonic/frame"
-	"github.com/ProjectAthenaa/target/debug"
+	"github.com/ProjectAthenaa/sonic-core/sonic/core"
 	module2 "github.com/ProjectAthenaa/target/module"
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/test/bufconn"
-	"log"
 	"net"
 	"testing"
+	"time"
 )
 
 const bufSize = 1024 * 1024
@@ -22,30 +23,38 @@ func bufDialer(context.Context, string) (net.Conn, error) {
 	return lis.Dial()
 }
 
-func init(){
-	go debug.StartShapeServer()
+func init() {
+	//go debug.StartShapeServer()
 	lis = bufconn.Listen(bufSize)
 	server := grpc.NewServer()
 	module.RegisterModuleServer(server, module2.Server{})
-	go func(){
+	go func() {
 		server.Serve(lis)
 	}()
 }
 
-func TestModule(t *testing.T){
+func TestModule(t *testing.T) {
 	subToken, controlToken := uuid.NewString(), uuid.NewString()
 
 	productlink := "https://www.target.com/p/coleman-3pk-propane/-/A-81968997"
 
+	//username := "ABWO9"
+	//password := "22K44UDZ"
+	//ip := "192.142.109.96"
+	//port := "8637"
+
+	ip := "localhost"
+	port := "8866"
+
 	tk := &module.Data{
-		TaskID:         uuid.NewString(),
-		Profile:        &module.Profile{
-			Email:    "poprer656sad@gmail.com",
+		TaskID: uuid.NewString(),
+		Profile: &module.Profile{
+			Email: "poprer656sad@gmail.com",
 			Shipping: &module.Shipping{
-				FirstName:         "Omar",
-				LastName:          "Hu",
-				PhoneNumber:       "6463222013",
-				ShippingAddress:   &module.Address{
+				FirstName:   "Omar",
+				LastName:    "Hu",
+				PhoneNumber: "6463222013",
+				ShippingAddress: &module.Address{
 					AddressLine:  "7004 JFK BLVD E",
 					AddressLine2: nil,
 					Country:      "US",
@@ -54,7 +63,7 @@ func TestModule(t *testing.T){
 					ZIP:          "07093",
 					StateCode:    "NJ",
 				},
-				BillingAddress:    &module.Address{
+				BillingAddress: &module.Address{
 					AddressLine:  "7004 JFK BLVD E",
 					AddressLine2: nil,
 					Country:      "US",
@@ -65,51 +74,59 @@ func TestModule(t *testing.T){
 				},
 				BillingIsShipping: true,
 			},
-			Billing:  &module.Billing{
+			Billing: &module.Billing{
 				Number:          "4207670236068972",
 				ExpirationMonth: "05",
 				ExpirationYear:  "25",
 				CVV:             "997",
 			},
 		},
-		Proxy:          &module.Proxy{
-			IP:       "127.0.0.1",
-			Port:     "8866",
+		Proxy: &module.Proxy{
+			//Username: &username,
+			//Password: &password,
+			IP:       ip,
+			Port:     port,
 		},
-		TaskData:       &module.TaskData{
+		TaskData: &module.TaskData{
 			RandomSize:  false,
 			RandomColor: false,
-			Color:       nil,
-			Size:        nil,
+			Color:       []string{"1"},
+			Size:        []string{"1"},
 			Link:        &productlink,
 		},
 		Metadata: map[string]string{
-			"username":"chouerzi@gmail.com",
-			"password":"Poprer656sad.",
+			"username": "chouerzi@gmail.com",
+			"password": "Poprer656sad.",
 		},
-		Channels:       &module.Channels{
+		Channels: &module.Channels{
 			UpdatesChannel:  subToken,
 			CommandsChannel: controlToken,
 		},
 	}
 
 	conn, err := grpc.DialContext(context.Background(), "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
-	if err != nil{
+	if err != nil {
 		t.Fatal(err)
 	}
 	client := module.NewModuleClient(conn)
+	ctx, _ := context.WithDeadline(context.Background(), time.Now().Add(time.Second*5))
 
-	pubsub, err := frame.SubscribeToChannel(subToken)
-	if err != nil{
-		t.Fatal(err)
-	}
+	t.Log("connecting to redis")
+	pubsub := core.Base.GetRedis("cache").Subscribe(ctx, fmt.Sprintf("tasks:updates:%s",subToken))
+	t.Log("connected to redis")
+
+	go func() {
+		for msg := range pubsub.Channel() {
+			var data module.Status
+			_ = json.Unmarshal([]byte(msg.Payload),&data)
+			fmt.Println(data.Status)
+		}
+	}()
 
 	_, err = client.Task(context.Background(), tk)
-	if err != nil{
+	if err != nil {
 		t.Fatal(err)
 	}
 
-	for msg := range pubsub.Channel{
-		log.Println(msg.Payload)
-	}
+	time.Sleep(time.Minute)
 }

@@ -3,6 +3,7 @@ package module
 import (
 	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
+	"github.com/prometheus/common/log"
 	"regexp"
 	"sync"
 	"sync/atomic"
@@ -10,7 +11,7 @@ import (
 
 var (
 	imageRe = regexp.MustCompile(`"og:image" content=("https://target.scene7.com/is/image/Target/GUEST_[^\"]+?")`)
-	tcinRe = regexp.MustCompile(`"tcin":"\d+?"`)
+	tcinRe  = regexp.MustCompile(`"tcin":"(\d+?)"`)
 )
 
 type StockInfo struct {
@@ -18,22 +19,25 @@ type StockInfo struct {
 		Product struct {
 			Fulfillment struct {
 				ShippingOptions struct {
-					AvailabilityStatus  string  `json:"availability_status"`
+					AvailabilityStatus string `json:"availability_status"`
 				} `json:"shipping_options"`
 			} `json:"fulfillment"`
 		} `json:"product"`
 	} `json:"data"`
 }
 
-func (tk *Task) InitData(){
+func (tk *Task) InitData() {
 	req, err := tk.NewRequest("GET", *tk.Data.TaskData.Link, nil)
-	if err != nil{
+	if err != nil {
+		log.Error("new req: ", err)
 		tk.SetStatus(module.STATUS_ERROR, "could not fetch product page")
 		tk.Stop()
 		return
 	}
+
 	res, err := tk.Do(req)
-	if err != nil{
+	if err != nil {
+		log.Error("do req: ", err)
 		tk.SetStatus(module.STATUS_ERROR, "could not read product page")
 		tk.Stop()
 		return
@@ -44,8 +48,8 @@ func (tk *Task) InitData(){
 }
 
 func (tk *Task) WaitForInstock() {
-	req, err := tk.NewRequest("GET", fmt.Sprintf(`https://redsky.target.com/redsky_aggregations/v1/web/pdp_fulfillment_v1?key=%s&tcin=%s&store_id=%s&store_positions_store_id=%s&has_store_positions_store_id=true&zip=%s&state=NJ&scheduled_delivery_store_id=%s&pricing_store_id=%s&has_pricing_store_id=true&is_bot=false`, tk.apikey, tk.pid, tk.storeid, tk.storeid, tk.Data.Profile.Shipping.ShippingAddress.ZIP,tk.storeid, tk.storeid ), nil)
-	if err != nil{
+	req, err := tk.NewRequest("GET", fmt.Sprintf(`https://redsky.target.com/redsky_aggregations/v1/web/pdp_fulfillment_v1?key=%s&tcin=%s&store_id=%s&store_positions_store_id=%s&has_store_positions_store_id=true&zip=%s&state=NJ&scheduled_delivery_store_id=%s&pricing_store_id=%s&has_pricing_store_id=true&is_bot=false`, tk.apikey, tk.pid, tk.storeid, tk.storeid, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.storeid, tk.storeid), nil)
+	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "could not fetch product availability")
 		tk.Stop()
 		return
@@ -56,13 +60,13 @@ func (tk *Task) WaitForInstock() {
 
 	tk.SetStatus(module.STATUS_MONITORING, "waiting for instock")
 
-	for i := 0 ; i < 5; i++{
+	for i := 0; i < 5; i++ {
 		wg.Add(1)
-		go func(){
+		go func() {
 			defer wg.Done()
-			for found == 0{
+			for found == 0 {
 				res, err := tk.Do(req)
-				if err != nil{
+				if err != nil {
 					tk.SetStatus(module.STATUS_ERROR, "could not read product availability")
 					tk.Stop()
 					return
@@ -70,7 +74,7 @@ func (tk *Task) WaitForInstock() {
 
 				var instock *StockInfo
 				json.Unmarshal(res.Body, &instock)
-				if instock.Data.Product.Fulfillment.ShippingOptions.AvailabilityStatus == "IN_STOCK"{
+				if instock.Data.Product.Fulfillment.ShippingOptions.AvailabilityStatus == "IN_STOCK" {
 					atomic.AddInt32(&found, 1)
 				}
 			}

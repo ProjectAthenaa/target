@@ -2,11 +2,9 @@ package module
 
 import (
 	"context"
-	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic"
 	"github.com/ProjectAthenaa/sonic-core/sonic/antibots/shape"
-	"github.com/prometheus/common/log"
 	"os"
 )
 
@@ -19,12 +17,11 @@ var shapeClient shape.ShapeClient
 func init() {
 	var err error
 	if os.Getenv("DEBUG") == "1" {
-		shapeClient, err = sonic.NewShapeClient("localhost:5000")
+		shapeClient, err = sonic.NewShapeClient("localhost:3000")
 		if err != nil {
 			panic(err)
 		}
 
-		fmt.Println(shapeClient.GenHeaders(context.Background(), &shape.Site{Value: shape.SITE_TARGET}))
 		return
 	}
 
@@ -35,11 +32,8 @@ func init() {
 
 }
 
-func (s Server) Task(ctx context.Context, data *module.Data) (*module.StartResponse, error) {
-	task := &Task{}
-	log.Info(data.TaskID)
-
-	task.Init()
+func (s Server) Task(_ context.Context, data *module.Data) (*module.StartResponse, error) {
+	task := NewTask(data)
 	if err := task.Start(data); err != nil {
 		return nil, err
 	}
