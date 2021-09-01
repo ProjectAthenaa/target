@@ -28,8 +28,8 @@ github.com/DataDog/zstd v1.4.8/go.mod h1:g4AWEaM3yOg3HYfnJ3YIawPnVdXJh9QME85blwS
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/ProjectAthenaa/shape v0.0.0-20210830220703-7179a5601742 h1:BgD4CT/+EhfBIknK5uIPJD46d9cwwfvr2V31eMB8Mv4=
 github.com/ProjectAthenaa/shape v0.0.0-20210830220703-7179a5601742/go.mod h1:7iOCHcAp2mdHxjtY9uf4dew3qbrBtO4Xj4i1LRu87W4=
-github.com/ProjectAthenaa/sonic-core v0.0.0-20210830214837-b88c80ff403f h1:OSEp5LxDPYUvlIWSNKFck90SMh+BBVlAHcWtJYslx4Y=
-github.com/ProjectAthenaa/sonic-core v0.0.0-20210830214837-b88c80ff403f/go.mod h1:QTOHLj2jXqfGiUjUaQVxGd6JZs9RhAN8uINqlS4YArw=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210901174620-4cfde4399567 h1:mGGRugEA1fU408IYBxhKUTUY/XGuv720LhEUcErAG6c=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210901174620-4cfde4399567/go.mod h1:QTOHLj2jXqfGiUjUaQVxGd6JZs9RhAN8uINqlS4YArw=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210901174054-3eba8b21500c h1:BQ/GMFPOrSIDUTCtKue5PSWlH1kBy3DPfWDTK8/PHtE=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210901174054-3eba8b21500c/go.mod h1:QEm/mffePQ+wpJYSiw6sAHyflNRW24O+C9VcQIpI5DI=
 github.com/agnivade/levenshtein v1.0.1/go.mod h1:CURSv5d9Uaml+FovSIICkLbAUZ9S4RqaHDIsdSBg7lM=
@@ -117,8 +117,6 @@ github.com/go-redis/redis/v8 v8.11.3/go.mod h1:xNJ9xDG09FsIPwh3bWdk+0oDWHbtF9rPN
 github.com/go-sql-driver/mysql v1.5.1-0.20200311113236-681ffa848bae/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
 github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=
 github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0/go.mod h1:fyg7847qk6SyHyPtNmDHnmrv/HOrqktSC+C9fM+CJOE=
-github.com/godtoy/autosolve v0.0.3 h1:SVkU2/o+87SCpIiBWKJxC7i5PcxuG265MUX7DjsVa7I=
-github.com/godtoy/autosolve v0.0.3/go.mod h1:LEH0j2f+TnuoGzP7lEaw7R6pOmpafwBzeuNh042wfrU=
 github.com/gogo/protobuf v1.0.0/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
 github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
 github.com/gogo/protobuf v1.2.1/go.mod h1:hp+jE20tsWTFYpLwKvXlhS1hjn+gTNwPg2I6zVXpSg4=
@@ -338,8 +336,6 @@ github.com/spf13/jwalterweatherman v1.0.0/go.mod h1:cQK4TGJAtQXfYWX+Ddv3mKDzgVb6
 github.com/spf13/pflag v1.0.3/go.mod h1:DYY7MBk1bdzusC3SYhjObp+wFpr4gzcvqqNjLnInEg4=
 github.com/spf13/pflag v1.0.5/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An2Bg=
 github.com/spf13/viper v1.7.0/go.mod h1:8WkrPz2fc9jxqZNCJI/76HCieCp4Q8HaLFoCha5qpdg=
-github.com/streadway/amqp v1.0.0 h1:kuuDrUJFZL1QYL9hUNuCxNObNzB0bV/ZG5jV3RWAQgo=
-github.com/streadway/amqp v1.0.0/go.mod h1:AZpEONHx3DKn8O/DFsRAY58/XVQiIPMTMB1SddzLXVw=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.1.1/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.2.0/go.mod h1:qt09Ya8vawLte6SNmTgCsAVtYtaKzEcn8ATUoHMkEqE=

@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/ProjectAthenaa/shape v0.0.0-20210830220703-7179a5601742
-	github.com/ProjectAthenaa/sonic-core v0.0.0-20210830214837-b88c80ff403f
+	github.com/ProjectAthenaa/sonic-core v0.0.0-20210901174620-4cfde4399567
 	github.com/ProjectAthenaa/threatmatrix v0.0.0-20210901174054-3eba8b21500c
 	github.com/json-iterator/go v1.1.11
 	github.com/prometheus/common v0.4.0
@@ -27,7 +27,6 @@ require (
 	github.com/go-bindata/go-bindata v1.0.1-0.20190711162640-ee3c2418e368 // indirect
 	github.com/go-openapi/inflect v0.19.0 // indirect
 	github.com/go-redis/redis/v8 v8.11.3 // indirect
-	github.com/godtoy/autosolve v0.0.3 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/graphql-go/graphql v0.8.0 // indirect
@@ -39,7 +38,6 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
-	github.com/streadway/amqp v1.0.0 // indirect
 	github.com/thoas/go-funk v0.9.0 // indirect
 	github.com/useflyent/fhttp v0.0.0-20210801005649-f160dd923789 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
