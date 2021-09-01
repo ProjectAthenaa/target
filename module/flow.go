@@ -6,6 +6,7 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/sonic/antibots/shape"
 	"github.com/prometheus/common/log"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -157,7 +158,12 @@ func (tk *Task) SubmitPayment() {
 		return
 	}
 
-	tk.paymentinstructionid = paymentInstructionRe.FindStringSubmatch(string(res.Body))[1]
+	var instructionresponse *PaymentInstructions
+	json.Unmarshal(res.Body, &instructionresponse)
+
+	tk.paymentinstructionid = instructionresponse.PaymentInstructionID
+	tk.ReturningFields.Price = strconv.FormatFloat(instructionresponse.PaymentInstructionAmount, 'f', -1, 64)
+
 }
 
 func (tk *Task) CompareCard() {
@@ -226,6 +232,14 @@ func (tk *Task) SubmitCheckout() {
 		tk.Stop()
 		return
 	}
+
+	var orderdata *CheckoutResponse
+	json.Unmarshal(res.Body, &orderdata)
+
+	tk.ReturningFields.Size = "os"
+	tk.ReturningFields.ProductImage = fmt.Sprintf(`https://target.scene7.com/is/image/Target/GUEST_%s?wid=175&hei=175&qlt=80&fmt=webp`, tk.imageguestid)
+	tk.ReturningFields.Color = "na"
+	tk.ReturningFields.OrderNumber = orderdata.Orders[0].OrderID
 
 	if res.StatusCode == 401 {
 		tk.RefreshToken()

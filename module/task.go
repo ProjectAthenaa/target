@@ -9,8 +9,7 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/sonic/face"
 	"github.com/ProjectAthenaa/sonic-core/sonic/frame"
 	"github.com/ProjectAthenaa/threatmatrix"
-	fhttp "github.com/useflyent/fhttp"
-	"net/url"
+	"strings"
 )
 
 var _ face.ICallback = (*Task)(nil)
@@ -28,6 +27,7 @@ type Task struct {
 	visitorid            string
 	guestid              string
 	paymentinstructionid string
+	imageguestid		 string
 	//temporary holders for metadata
 	username string
 	password string
@@ -48,22 +48,17 @@ func (tk *Task) OnInit() {
 	tk.Monitor = pubsub
 }
 func (tk *Task) OnPreStart() error {
-	tk.Client.Jar.SetCookies(&url.URL{}, []*fhttp.Cookie{
-		{
-			Name:  "UserLocation",
-			Value: fmt.Sprintf(`%s|||%s|%s`, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.Country),
-		}, {
-			Name:  "hasApp",
-			Value: "false",
-		},
-	})
+	tk.FastClient.Jar.Set("UserLocation",fmt.Sprintf(`%s|||%s|%s`, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.Country),)
+	tk.FastClient.Jar.Set("hasApp","false")
 	return nil
 }
 func (tk *Task) OnStarting() {
 	tk.Login()
 	tk.SetStatus(module.STATUS_STARTING, "starting task")
-	sizeinfo := <-tk.Monitor.Channel
-	tk.pid = sizeinfo.Payload
+	rawinfo := <-tk.Monitor.Channel
+	monitorinfo := strings.Split(rawinfo.Payload, ":")
+	tk.imageguestid = monitorinfo[1]
+	tk.pid = monitorinfo[0]
 	tk.ATC()
 	tk.NearestStore()
 	tk.RefreshCartId()
