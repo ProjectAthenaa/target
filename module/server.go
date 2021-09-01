@@ -6,6 +6,7 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic"
 	"github.com/ProjectAthenaa/sonic-core/sonic/antibots/shape"
+	"github.com/prometheus/common/log"
 	"os"
 )
 
@@ -36,6 +37,7 @@ func init() {
 
 func (s Server) Task(ctx context.Context, data *module.Data) (*module.StartResponse, error) {
 	task := Task{}
+	log.Info(data.TaskID)
 	task.Init()
 	if err := task.Start(data); err != nil {
 		return nil, err
