@@ -96,3 +96,26 @@ func (tk *Task) GenerateDefaultHeaders(referrer string) http.Headers {
 		`referer`:            {referrer},
 	}
 }
+
+func (tk *Task) NearestStore() {
+	storereq, err := tk.NewRequest("GET", fmt.Sprintf("https://api.target.com/shipt_deliveries/v1/stores?zip=%s&key=%s", tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.apikey), nil)
+	if err != nil {
+		tk.SetStatus(module.STATUS_ERROR, "error creating find store request")
+		tk.Stop()
+		return
+	}
+
+	res, err := tk.Do(storereq)
+	if err != nil {
+		tk.SetStatus(module.STATUS_ERROR, "error making find store request")
+		tk.Stop()
+		return
+	}
+	if res.StatusCode == 401 {
+		tk.RefreshToken()
+		tk.NearestStore()
+		return
+	}
+
+	tk.locationid = locationIdRe.FindStringSubmatch(string(res.Body))[1]
+}
