@@ -1,6 +1,7 @@
 package module
 
 import (
+	"fmt"
 	http "github.com/ProjectAthenaa/sonic-core/fasttls"
 	"github.com/ProjectAthenaa/sonic-core/fasttls/tls"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
@@ -8,6 +9,8 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/sonic/face"
 	"github.com/ProjectAthenaa/sonic-core/sonic/frame"
 	"github.com/ProjectAthenaa/threatmatrix"
+	fhttp "github.com/useflyent/fhttp"
+	"net/url"
 )
 
 var _ face.ICallback = (*Task)(nil)
@@ -45,15 +48,24 @@ func (tk *Task) OnInit() {
 	tk.Monitor = pubsub
 }
 func (tk *Task) OnPreStart() error {
+	tk.Client.Jar.SetCookies(&url.URL{}, []*fhttp.Cookie{
+		{
+			Name:  "UserLocation",
+			Value: fmt.Sprintf(`%s|||%s|%s`, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.Country),
+		}, {
+			Name:  "hasApp",
+			Value: "false",
+		},
+	})
 	return nil
 }
 func (tk *Task) OnStarting() {
+	tk.Login()
 	tk.SetStatus(module.STATUS_STARTING, "starting task")
 	sizeinfo := <-tk.Monitor.Channel
 	tk.pid = sizeinfo.Payload
 	tk.ATC()
 	tk.NearestStore()
-	tk.Login()
 	tk.RefreshCartId()
 	threatmatrix.SendRequests(tk.cartid)
 	tk.SubmitShipping()
