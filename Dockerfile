@@ -1,5 +1,5 @@
 #build stage
-FROM golang:1.16.0-buster as build-env
+FROM golang:1.17.0-buster as build-env
 ARG GH_TOKEN
 RUN git config --global url."https://${GH_TOKEN}:x-oauth-basic@github.com/ProjectAthenaa".insteadOf "https://github.com/ProjectAthenaa"
 RUN mkdir /app
