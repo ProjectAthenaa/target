@@ -36,8 +36,9 @@ func init() {
 }
 
 func (s Server) Task(ctx context.Context, data *module.Data) (*module.StartResponse, error) {
-	task := Task{}
+	task := &Task{}
 	log.Info(data.TaskID)
+
 	task.Init()
 	if err := task.Start(data); err != nil {
 		return nil, err
