@@ -35,6 +35,8 @@ func (tk *Task) InitData() {
 		return
 	}
 
+	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com/")
+
 	res, err := tk.Do(req)
 	if err != nil {
 		log.Error("do req: ", err)

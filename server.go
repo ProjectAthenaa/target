@@ -7,21 +7,20 @@ import (
 	"github.com/prometheus/common/log"
 	"google.golang.org/grpc"
 	"net"
-	"regexp"
 )
 
 func init() {
 	target := &sonic.Module{
-		Name: "Target US",
+		Name: "Target",
 		Fields: []sonic.InputField{
 			{
-				Validation: regexp.MustCompile("https://www.target.*?"),
-				Label: "URL",
+				Validation: "https://www.target.*?",
+				Label:      "URL",
 			},
 		},
 	}
 
-	if err := sonic.RegisterModule(target); err != nil{
+	if err := sonic.RegisterModule(target); err != nil {
 		panic(err)
 	}
 }

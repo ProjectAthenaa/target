@@ -37,6 +37,7 @@ type RefreshTokenResp struct {
 func (tk *Task) APIKey() {
 	req, err := tk.NewRequest("GET", "https://www.target.com/", nil)
 	if err != nil {
+		log.Error("make req: ", err)
 		tk.SetStatus(module.STATUS_ERROR, "could not make homepage req")
 		tk.Stop()
 		return
@@ -45,12 +46,16 @@ func (tk *Task) APIKey() {
 
 	res, err := tk.Do(req)
 	if err != nil {
+		log.Error("do req: ", err)
 		tk.SetStatus(module.STATUS_ERROR, "could not fetch site")
 		tk.Stop()
 		return
 	}
 
 	tk.apikey = apikeyRe.FindStringSubmatch(string(res.Body))[1]
+	res.Original.Header.VisitAllCookie(func(key, value []byte) {
+		fmt.Println(string(key), " ", string(value))
+	})
 }
 
 func (tk *Task) RefreshToken() {
