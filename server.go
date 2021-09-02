@@ -43,6 +43,7 @@ func main() {
 
 	module.RegisterModuleServer(server, moduleServer.Server{})
 
+	log.Info("Target Module Initialized")
 	if err = server.Serve(listener); err != nil {
 		log.Fatalln("start server: ", err)
 	}
