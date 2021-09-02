@@ -13,13 +13,5 @@ RUN go build -ldflags "-s -w" -o target
 FROM alpine
 WORKDIR /app
 COPY --from=build-env /app/target /app/
-
-RUN apt-get update \
- && apt-get install -y --no-install-recommends ca-certificates
-
-RUN update-ca-certificates
-
-
 EXPOSE 3000 3000
-
 ENTRYPOINT ./target
