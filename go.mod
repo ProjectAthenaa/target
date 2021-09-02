@@ -3,7 +3,7 @@ module github.com/ProjectAthenaa/target
 go 1.17
 
 require (
-	github.com/ProjectAthenaa/sonic-core v0.0.0-20210902110148-b988237c40f9
+	github.com/ProjectAthenaa/sonic-core v0.0.0-20210902135132-46ad7936e79e
 	github.com/ProjectAthenaa/threatmatrix v0.0.0-20210901174054-3eba8b21500c
 	github.com/google/uuid v1.3.0
 	github.com/json-iterator/go v1.1.11

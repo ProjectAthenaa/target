@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic"
+	"github.com/ProjectAthenaa/target/config"
 	moduleServer "github.com/ProjectAthenaa/target/module"
 	"github.com/prometheus/common/log"
 	"google.golang.org/grpc"
@@ -10,23 +11,13 @@ import (
 )
 
 func init() {
-	target := &sonic.Module{
-		Name: "Target",
-		Fields: []sonic.InputField{
-			{
-				Validation: "https://www.target.*?",
-				Label:      "URL",
-			},
-		},
-	}
-
-	if err := sonic.RegisterModule(target); err != nil {
+	if err := sonic.RegisterModule(config.Module); err != nil {
 		panic(err)
 	}
 }
 
 func main() {
-	listener, err := net.Listen("tcp", "3000")
+	listener, err := net.Listen("tcp", ":3000")
 	if err != nil {
 		log.Fatalln("start listener: ", err)
 	}
@@ -35,6 +26,7 @@ func main() {
 
 	module.RegisterModuleServer(server, moduleServer.Server{})
 
+	log.Info("Target Module Initialized")
 	if err = server.Serve(listener); err != nil {
 		log.Fatalln("start server: ", err)
 	}

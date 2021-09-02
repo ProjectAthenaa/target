@@ -79,8 +79,8 @@ func TestModule(t *testing.T) {
 		Proxy: &module.Proxy{
 			//Username: &username,
 			//Password: &password,
-			IP:       ip,
-			Port:     port,
+			IP:   ip,
+			Port: port,
 		},
 		TaskData: &module.TaskData{
 			RandomSize:  false,
@@ -107,13 +107,13 @@ func TestModule(t *testing.T) {
 	ctx, _ := context.WithDeadline(context.Background(), time.Now().Add(time.Second*5))
 
 	t.Log("connecting to redis")
-	pubsub := core.Base.GetRedis("cache").Subscribe(ctx, fmt.Sprintf("tasks:updates:%s",subToken))
+	pubsub := core.Base.GetRedis("cache").Subscribe(ctx, fmt.Sprintf("tasks:updates:%s", subToken))
 	t.Log("connected to redis")
 
 	go func() {
 		for msg := range pubsub.Channel() {
 			var data module.Status
-			_ = json.Unmarshal([]byte(msg.Payload),&data)
+			_ = json.Unmarshal([]byte(msg.Payload), &data)
 			fmt.Println(data.Status, data.Information["message"])
 		}
 	}()
