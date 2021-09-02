@@ -63,8 +63,8 @@ func (tk *Task) Flow() {
 	tk.WaitForInstock()
 	tk.ATC()
 	tk.NearestStore()
-	tk.RefreshCartId()
+	//tk.RefreshCartId()
 	threatmatrix.SendRequests(tk.cartid)
-	tk.SubmitShipping()
-	tk.SubmitPayment()
+	//tk.SubmitShipping()
+	//tk.SubmitPayment()
 }
