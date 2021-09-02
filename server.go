@@ -34,7 +34,7 @@ func init() {
 }
 
 func main() {
-	listener, err := net.Listen("tcp", "3000")
+	listener, err := net.Listen("tcp", ":3000")
 	if err != nil {
 		log.Fatalln("start listener: ", err)
 	}
