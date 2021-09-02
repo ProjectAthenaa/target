@@ -26,8 +26,8 @@ github.com/DATA-DOG/go-sqlmock v1.5.0/go.mod h1:f/Ixk793poVmq4qj/V1dPUg2JEAKC73Q
 github.com/DataDog/zstd v1.4.8 h1:Rpmta4xZ/MgZnriKNd24iZMhGpP5dvUcs/uqfBapKZY=
 github.com/DataDog/zstd v1.4.8/go.mod h1:g4AWEaM3yOg3HYfnJ3YIawPnVdXJh9QME85blwSAmyw=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
-github.com/ProjectAthenaa/sonic-core v0.0.0-20210902132541-9ce1d967540a h1:3Z7Jh8g+W3+YRG2i4wYHSuxLV6R+fbvw+atg+FVP42U=
-github.com/ProjectAthenaa/sonic-core v0.0.0-20210902132541-9ce1d967540a/go.mod h1:dpVela+eSLMO3SoWKl0Z08yLXBN+FupeXW/N8irh1c4=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210902135132-46ad7936e79e h1:ClQmDO+bWTANex/IEP5B3F+uNRougaGEf8mJuA0sZTU=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210902135132-46ad7936e79e/go.mod h1:dpVela+eSLMO3SoWKl0Z08yLXBN+FupeXW/N8irh1c4=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210901174054-3eba8b21500c h1:BQ/GMFPOrSIDUTCtKue5PSWlH1kBy3DPfWDTK8/PHtE=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210901174054-3eba8b21500c/go.mod h1:QEm/mffePQ+wpJYSiw6sAHyflNRW24O+C9VcQIpI5DI=
 github.com/agnivade/levenshtein v1.0.1/go.mod h1:CURSv5d9Uaml+FovSIICkLbAUZ9S4RqaHDIsdSBg7lM=

@@ -23,6 +23,7 @@ func init() {
 			{
 				Validation: "https://www.target.*?",
 				Type:       sonic.FieldTypeText,
+				Label:      "Product Link",
 				FieldKey:   &fieldKey,
 			},
 		},
