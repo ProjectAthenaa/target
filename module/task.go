@@ -19,8 +19,6 @@ type Task struct {
 	cartitemid           string
 	storeid              string
 	locationid           string
-	tealid               string
-	visitorid            string
 	guestid              string
 	paymentinstructionid string
 	imagelink            string
@@ -57,6 +55,7 @@ func (tk *Task) OnStopping() {
 func (tk *Task) Flow() {
 	tk.FastClient.Jar.Set("UserLocation", fmt.Sprintf(`%s|||%s|%s`, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.Country))
 	tk.FastClient.Jar.Set("hasApp", "false")
+	tk.APIKey()
 	tk.InitData()
 	tk.NearestStore()
 	tk.Login()

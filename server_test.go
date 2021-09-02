@@ -95,8 +95,8 @@ func TestModule(t *testing.T) {
 			Link:        &productlink,
 		},
 		Metadata: map[string]string{
-			"username": "chouerzi@gmail.com",
-			"password": "Poprer656sad.",
+			"username": "terrydavis903@gmail.com",
+			"password": "0o0p0o0P.",
 		},
 		Channels: &module.Channels{
 			UpdatesChannel:  subToken,
@@ -119,7 +119,7 @@ func TestModule(t *testing.T) {
 		for msg := range pubsub.Channel() {
 			var data module.Status
 			_ = json.Unmarshal([]byte(msg.Payload),&data)
-			fmt.Println(data.Status)
+			fmt.Println(data.Status, data.Information["message"])
 		}
 	}()
 
