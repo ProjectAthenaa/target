@@ -50,13 +50,6 @@ func (tk *Task) InitData() {
 }
 
 func (tk *Task) WaitForInstock() {
-	req, err := tk.NewRequest("GET", fmt.Sprintf(`https://redsky.target.com/redsky_aggregations/v1/web/pdp_fulfillment_v1?key=%s&tcin=%s&store_id=%s&store_positions_store_id=%s&has_store_positions_store_id=true&zip=%s&state=NJ&scheduled_delivery_store_id=%s&pricing_store_id=%s&has_pricing_store_id=true&is_bot=false`, tk.apikey, tk.pid, tk.storeid, tk.storeid, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.storeid, tk.storeid), nil)
-	if err != nil {
-		tk.SetStatus(module.STATUS_ERROR, "could not fetch product availability")
-		tk.Stop()
-		return
-	}
-
 	var found int32
 	var wg sync.WaitGroup
 
@@ -67,9 +60,17 @@ func (tk *Task) WaitForInstock() {
 		go func() {
 			defer wg.Done()
 			for found == 0 {
+				req, err := tk.NewRequest("GET", fmt.Sprintf(`https://redsky.target.com/redsky_aggregations/v1/web/pdp_fulfillment_v1?key=%s&tcin=%s&store_id=%s&store_positions_store_id=%s&has_store_positions_store_id=true&zip=%s&state=NJ&scheduled_delivery_store_id=%s&pricing_store_id=%s&has_pricing_store_id=true&is_bot=false`, tk.apikey, tk.pid, tk.storeid, tk.storeid, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.storeid, tk.storeid), nil)
+				if err != nil {
+					tk.SetStatus(module.STATUS_ERROR, "could not fetch product availability")
+					tk.Stop()
+					return
+				}
+
 				res, err := tk.Do(req)
 				if err != nil {
-					tk.SetStatus(module.STATUS_ERROR, "could not read product availability")
+					log.Info(err.Error())
+					tk.SetStatus(module.STATUS_ERROR, err.Error())
 					tk.Stop()
 					return
 				}

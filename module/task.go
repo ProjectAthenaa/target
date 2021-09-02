@@ -18,7 +18,6 @@ type Task struct {
 	cartid               string
 	cartitemid           string
 	storeid              string
-	locationid           string
 	guestid              string
 	paymentinstructionid string
 	imagelink            string
@@ -52,15 +51,17 @@ func (tk *Task) OnPause() error {
 func (tk *Task) OnStopping() {
 	tk.FastClient.Destroy()
 	log.Info("stop called")
-	panic("")
+	return
 }
 
 func (tk *Task) Flow() {
 	tk.APIKey()
 	tk.InitData()
 	tk.NearestStore()
-	//tk.Login()
-	//tk.ATC()
+	tk.OauthPost()
+	tk.Login()
+	tk.WaitForInstock()
+	tk.ATC()
 	tk.NearestStore()
 	//tk.RefreshCartId()
 	threatmatrix.SendRequests(tk.cartid)

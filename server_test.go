@@ -36,12 +36,7 @@ func init() {
 func TestModule(t *testing.T) {
 	subToken, controlToken := uuid.NewString(), uuid.NewString()
 
-	productlink := "https://www.target.com/p/coleman-3pk-propane/-/A-81968997"
-
-	//username := "ABWO9"
-	//password := "22K44UDZ"
-	//ip := "192.142.109.96"
-	//port := "8637"
+	productlink := "https://www.target.com/p/velvet-solid-quilt-sham-threshold/-/A-82474899"
 
 	ip := "localhost"
 	port := "8866"
@@ -95,8 +90,8 @@ func TestModule(t *testing.T) {
 			Link:        &productlink,
 		},
 		Metadata: map[string]string{
-			"username": "agiann.aegina@gmail.com",
-			"password": "Dionwi454sd",
+			"username": "terrydavis903@gmail.com",
+			"password": "0o0p0o0P",
 		},
 		Channels: &module.Channels{
 			UpdatesChannel:  subToken,
