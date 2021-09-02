@@ -3,6 +3,7 @@ package module
 import (
 	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
+	"github.com/ProjectAthenaa/target/config"
 )
 
 func (tk *Task) ATC() {
@@ -13,7 +14,7 @@ func (tk *Task) ATC() {
 		tk.Stop()
 		return
 	}
-	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com/")
+	req.Headers = tk.GenerateDefaultHeaders(tk.Data.Metadata[*config.Module.Fields[0].FieldKey])
 
 
 	res, err := tk.Do(req)

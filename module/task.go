@@ -5,7 +5,6 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/base"
 	"github.com/ProjectAthenaa/sonic-core/sonic/face"
-	"github.com/ProjectAthenaa/threatmatrix"
 	"github.com/prometheus/common/log"
 )
 
@@ -55,16 +54,26 @@ func (tk *Task) OnStopping() {
 }
 
 func (tk *Task) Flow() {
-	tk.APIKey()
-	tk.InitData()
-	tk.NearestStore()
-	tk.OauthPost()
-	tk.Login()
-	tk.WaitForInstock()
-	tk.ATC()
-	tk.NearestStore()
-	//tk.RefreshCartId()
-	threatmatrix.SendRequests(tk.cartid)
-	//tk.SubmitShipping()
-	//tk.SubmitPayment()
+	funcarr := []func(){
+		tk.APIKey,
+		tk.InitData,
+		tk.NearestStore,
+		tk.OauthPost,
+		tk.OauthSession,
+		tk.Login,
+		tk.WaitForInstock,
+		tk.ATC,
+		tk.RefreshCartId,
+		tk.SubmitShipping,
+		tk.SubmitPayment,
+	}
+
+	for _, f := range funcarr {
+		select {
+		case <-tk.Ctx.Done():
+			return
+		default:
+			f()
+		}
+	}
 }

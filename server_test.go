@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/core"
+	"github.com/ProjectAthenaa/target/config"
 	module2 "github.com/ProjectAthenaa/target/module"
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
@@ -36,7 +37,7 @@ func init() {
 func TestModule(t *testing.T) {
 	subToken, controlToken := uuid.NewString(), uuid.NewString()
 
-	productlink := "https://www.target.com/p/velvet-solid-quilt-sham-threshold/-/A-82474899"
+	productlink := "https://www.target.com/p/levi-s-men-s-512-slim-fit-taper-jeans/-/A-79691588"
 
 	ip := "localhost"
 	port := "8866"
@@ -92,6 +93,7 @@ func TestModule(t *testing.T) {
 		Metadata: map[string]string{
 			"username": "terrydavis903@gmail.com",
 			"password": "0o0p0o0P",
+			*config.Module.Fields[0].FieldKey : productlink ,
 		},
 		Channels: &module.Channels{
 			UpdatesChannel:  subToken,

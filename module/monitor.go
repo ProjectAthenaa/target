@@ -3,6 +3,7 @@ package module
 import (
 	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
+	"github.com/ProjectAthenaa/target/config"
 	"github.com/prometheus/common/log"
 	"regexp"
 	"sync"
@@ -27,7 +28,7 @@ type StockInfo struct {
 }
 
 func (tk *Task) InitData() {
-	req, err := tk.NewRequest("GET", *tk.Data.TaskData.Link, nil)
+	req, err := tk.NewRequest("GET", tk.Data.Metadata[*config.Module.Fields[0].FieldKey], nil)
 	if err != nil {
 		log.Error("new req: ", err)
 		tk.SetStatus(module.STATUS_ERROR, "could not fetch product page")
