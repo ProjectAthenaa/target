@@ -83,6 +83,8 @@ func (tk *Task) Login() {
 		tk.SetStatus(module.STATUS_ERROR, "error generating shape headers")
 	}
 
+	fmt.Println(headers.Values)
+
 	for k, v := range headers.Values {
 		req.Headers[k] = []string{v}
 	}
@@ -95,15 +97,23 @@ func (tk *Task) Login() {
 		return
 	}
 
-	if strings.Contains(string(res.Body), "_ERR_AUTH_DENIED") && tk.logincount < 3 {
-		tk.logincount++
-		tk.Login()
-		return
-	} else if tk.logincount >= 3 {
-		tk.SetStatus(module.STATUS_ERROR, "login error")
+	if strings.Contains(string(res.Body), "_ERR_AUTH_DENIED") {
+		data, _ := json.Marshal(headers.Values)
+		fmt.Println(string(data))
+		tk.SetStatus(module.STATUS_ERROR)
 		tk.Stop()
 		return
 	}
+
+	//if strings.Contains(string(res.Body), "_ERR_AUTH_DENIED") && tk.logincount < 3 {
+	//	tk.logincount++
+	//	tk.Login()
+	//	return
+	//} else if tk.logincount >= 3 {
+	//	tk.SetStatus(module.STATUS_ERROR, "login error")
+	//	tk.Stop()
+	//	return
+	//}
 
 	tk.guestid = guestIdRe.FindStringSubmatch(string(res.Body))[1]
 	tk.SetStatus(module.STATUS_LOGGED_IN)
