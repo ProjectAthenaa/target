@@ -26,8 +26,8 @@ github.com/DATA-DOG/go-sqlmock v1.5.0/go.mod h1:f/Ixk793poVmq4qj/V1dPUg2JEAKC73Q
 github.com/DataDog/zstd v1.4.8 h1:Rpmta4xZ/MgZnriKNd24iZMhGpP5dvUcs/uqfBapKZY=
 github.com/DataDog/zstd v1.4.8/go.mod h1:g4AWEaM3yOg3HYfnJ3YIawPnVdXJh9QME85blwSAmyw=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
-github.com/ProjectAthenaa/sonic-core v0.0.0-20210903013028-7273ee4b2180 h1:zY3S+qSYlUcg63MAsVDsITB3lCd3UG92QoOXobNg0zM=
-github.com/ProjectAthenaa/sonic-core v0.0.0-20210903013028-7273ee4b2180/go.mod h1:bjEHYXIx/nRz7+SrIzCH3p0BOUZea5hmpfQ/l91520g=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210903013819-c245a1e7b89a h1:2fF6EPSjbllVxC9L4H6gujhcKtJq+Jm4zNKQStdCMQc=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210903013819-c245a1e7b89a/go.mod h1:bjEHYXIx/nRz7+SrIzCH3p0BOUZea5hmpfQ/l91520g=
 github.com/agnivade/levenshtein v1.0.1/go.mod h1:CURSv5d9Uaml+FovSIICkLbAUZ9S4RqaHDIsdSBg7lM=
 github.com/agnivade/levenshtein v1.0.3/go.mod h1:4SFRZbbXWLF4MU1T9Qg0pGgH3Pjs+t6ie5efyrwRJXs=
 github.com/agnivade/levenshtein v1.1.0/go.mod h1:veldBMzWxcCG2ZvUTKD2kJNRdCk5hVbJomOvKkmgYbo=
