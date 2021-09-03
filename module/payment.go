@@ -191,10 +191,10 @@ func (tk *Task) SubmitCheckout() {
 		tk.SetStatus(module.STATUS_CHECKED_OUT, "checked out")
 	}else
 	if strings.Contains(string(res.Body), "PAYMENT_DECLINED_EXCEPTION"){
-		tk.SetStatus(module.STATUS_CHECKOUT_DECLINE)
+		tk.SetStatus(module.STATUS_CHECKOUT_DECLINE, "declined")
 	}else
 	{
-		tk.SetStatus(module.STATUS_CHECKOUT_ERROR)
+		tk.SetStatus(module.STATUS_CHECKOUT_ERROR, "error")
 	}
 
 }
