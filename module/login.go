@@ -98,6 +98,7 @@ func (tk *Task) Login() {
 	if strings.Contains(string(res.Body), "_ERR_AUTH_DENIED") {
 		data, _ := json.Marshal(headers.Values)
 		fmt.Println(string(data))
+		fmt.Println(string(res.Body))
 		tk.SetStatus(module.STATUS_ERROR)
 		tk.Stop()
 		return
