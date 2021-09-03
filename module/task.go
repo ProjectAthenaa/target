@@ -11,7 +11,7 @@ var _ face.ICallback = (*Task)(nil)
 
 type Task struct {
 	*base.BTask
-	logincount			 int
+	logincount           int
 	pid                  string
 	apikey               string
 	cartid               string
@@ -19,7 +19,7 @@ type Task struct {
 	storeid              string
 	guestid              string
 	paymentinstructionid string
-	authcode 			 string
+	authcode             string
 	imagelink            string
 	username             string
 	password             string
@@ -51,7 +51,7 @@ func (tk *Task) OnPause() error {
 }
 func (tk *Task) OnStopping() {
 	tk.FastClient.Destroy()
-	panic("")
+	//panic("")
 	return
 }
 

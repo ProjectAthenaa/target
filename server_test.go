@@ -41,8 +41,11 @@ func TestModule(t *testing.T) {
 
 	username := "4EJB5"
 	password := "IZWHAKE8"
-	ip := "47.76.49.223"
-	port := "5689"
+	ip := "47.76.57.190"
+	port := "7216"
+
+	//ip := "localhost"
+	//port := "8866"
 
 	tk := &module.Data{
 		TaskID: uuid.NewString(),
@@ -114,18 +117,17 @@ func TestModule(t *testing.T) {
 	pubsub := core.Base.GetRedis("cache").Subscribe(ctx, fmt.Sprintf("tasks:updates:%s", subToken))
 	t.Log("connected to redis")
 
-	go func() {
-		for msg := range pubsub.Channel() {
-			var data module.Status
-			_ = json.Unmarshal([]byte(msg.Payload), &data)
-			fmt.Println(data.Status, data.Information["message"])
-		}
-	}()
-
 	_, err = client.Task(context.Background(), tk)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	time.Sleep(time.Minute)
+	for msg := range pubsub.Channel() {
+		var data module.Status
+		_ = json.Unmarshal([]byte(msg.Payload), &data)
+		fmt.Println(data.Status, data.Information["message"])
+		if data.Status == module.STATUS_STOPPED {
+			return
+		}
+	}
 }
