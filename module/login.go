@@ -101,7 +101,7 @@ func (tk *Task) Login() {
 		tk.Login()
 		return
 	} else if tk.logincount >= 3 {
-		tk.SetStatus(module.STATUS_ERROR, "login error")
+		tk.SetStatus(module.STATUS_ERROR, "shape error")
 		tk.Stop()
 		return
 	}

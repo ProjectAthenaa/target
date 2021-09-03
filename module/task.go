@@ -21,8 +21,6 @@ type Task struct {
 	paymentinstructionid string
 	authcode             string
 	imagelink            string
-	username             string
-	password             string
 }
 
 func NewTask(data *module.Data) *Task {
