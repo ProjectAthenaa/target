@@ -21,7 +21,7 @@ func init() {
 		Name: name,
 		Fields: []*sonic.ModuleField{
 			{
-				Validation: "https://www.target.*?",
+				Validation: "https:\\/\\/www\\.target\\.com\\/p\\/.*\\/-\\/A-\\d+",
 				Type:       sonic.FieldTypeText,
 				Label:      "Product Link",
 				FieldKey:   &fieldKey,
