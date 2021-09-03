@@ -39,8 +39,10 @@ func TestModule(t *testing.T) {
 
 	productlink := "https://www.target.com/p/chuckle-38-roar-pop-it-fidget-and-sensory-game-tie-dye/-/A-81969353"
 
-	ip := "localhost"
-	port := "8866"
+	username := "4EJB5"
+	password := "IZWHAKE8"
+	ip := "47.76.49.223"
+	port := "5689"
 
 	tk := &module.Data{
 		TaskID: uuid.NewString(),
@@ -78,10 +80,10 @@ func TestModule(t *testing.T) {
 			},
 		},
 		Proxy: &module.Proxy{
-			//Username: &username,
-			//Password: &password,
-			IP:   ip,
-			Port: port,
+			Username: &username,
+			Password: &password,
+			IP:       ip,
+			Port:     port,
 		},
 		TaskData: &module.TaskData{
 			RandomSize:  false,
@@ -91,9 +93,9 @@ func TestModule(t *testing.T) {
 			Link:        &productlink,
 		},
 		Metadata: map[string]string{
-			"username": "terrydavis903@gmail.com",
-			"password": "0o0p0o0P",
-			*config.Module.Fields[0].FieldKey : productlink ,
+			"username":                        "terrydavis903@gmail.com",
+			"password":                        "0o0p0o0P",
+			*config.Module.Fields[0].FieldKey: productlink,
 		},
 		Channels: &module.Channels{
 			UpdatesChannel:  subToken,

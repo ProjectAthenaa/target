@@ -3,8 +3,7 @@ module github.com/ProjectAthenaa/target
 go 1.17
 
 require (
-	github.com/ProjectAthenaa/sonic-core v0.0.0-20210902150146-c1dda7323a51
-	github.com/ProjectAthenaa/threatmatrix v0.0.0-20210901174054-3eba8b21500c
+	github.com/ProjectAthenaa/sonic-core v0.0.0-20210903013028-7273ee4b2180
 	github.com/google/uuid v1.3.0
 	github.com/json-iterator/go v1.1.11
 	github.com/prometheus/common v0.4.0
@@ -31,6 +30,7 @@ require (
 	github.com/graphql-go/graphql v0.8.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
+	github.com/jpillora/go-tld v1.1.1 // indirect
 	github.com/klauspost/compress v1.13.5 // indirect
 	github.com/lib/pq v1.10.2 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
