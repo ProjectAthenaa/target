@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/antibots/shape"
+	"log"
 	"strings"
 	"time"
 )
@@ -24,6 +25,7 @@ func (tk *Task) APIKey() {
 		return
 	}
 
+	log.Println("api key res", string(res.Body))
 	tk.apikey = apikeyRe.FindStringSubmatch(string(res.Body))[1]
 }
 
