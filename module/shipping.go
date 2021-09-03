@@ -3,8 +3,8 @@ package module
 import (
 	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
-	"github.com/ProjectAthenaa/threatmatrix"
 	"github.com/prometheus/common/log"
+	"strings"
 )
 
 func (tk *Task) NearestStore() {
@@ -35,10 +35,10 @@ func (tk *Task) NearestStore() {
 func (tk *Task) SubmitShipping() {
 	tk.SetStatus(module.STATUS_SUBMITTING_SHIPPING)
 
-	threatmatrix.SendRequests(tk.cartid)
+	//threatmatrix.SendRequests(tk.cartid)
 
 	var form string
-	if *tk.Data.Profile.Shipping.ShippingAddress.AddressLine2 != "" {
+	if tk.Data.Profile.Shipping.ShippingAddress.AddressLine2 != nil {
 		form = fmt.Sprintf(`{"cart_type":"REGULAR","address":{"address_line1":"%s","address_line2":"%s","address_type":"SHIPPING","city":"%s","country":"%s","first_name":"%s","last_name":"%s","mobile":"%s","save_as_default":false,"state":"%s","zip_code":"%s"},"selected":true,"save_to_profile":true,"skip_verification":true}`, tk.Data.Profile.Shipping.ShippingAddress.AddressLine, tk.Data.Profile.Shipping.ShippingAddress.AddressLine2, tk.Data.Profile.Shipping.ShippingAddress.City, tk.Data.Profile.Shipping.ShippingAddress.Country, tk.Data.Profile.Shipping.FirstName, tk.Data.Profile.Shipping.LastName, tk.Data.Profile.Shipping.PhoneNumber, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.ZIP)
 	} else {
 		form = fmt.Sprintf(`{"cart_type":"REGULAR","address":{"address_line1":"%s","address_type":"SHIPPING","city":"%s","country":"%s","first_name":"%s","last_name":"%s","mobile":"%s","save_as_default":false,"state":"%s","zip_code":"%s"},"selected":true,"save_to_profile":true,"skip_verification":true}`, tk.Data.Profile.Shipping.ShippingAddress.AddressLine, tk.Data.Profile.Shipping.ShippingAddress.City, tk.Data.Profile.Shipping.ShippingAddress.Country, tk.Data.Profile.Shipping.FirstName, tk.Data.Profile.Shipping.LastName, tk.Data.Profile.Shipping.PhoneNumber, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.ZIP)
@@ -52,10 +52,14 @@ func (tk *Task) SubmitShipping() {
 	}
 	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com/co-delivery")
 
-	_, err = tk.Do(req)
+	res, err := tk.Do(req)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "error making shipping request")
 		tk.Stop()
+		return
+	}
+
+	if strings.Contains(string(res.Body), "ADDRESS_ALREADY_PRESENT"){
 		return
 	}
 }

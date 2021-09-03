@@ -19,6 +19,7 @@ type Task struct {
 	storeid              string
 	guestid              string
 	paymentinstructionid string
+	authcode 			 string
 	imagelink            string
 	username             string
 	password             string
@@ -50,6 +51,7 @@ func (tk *Task) OnPause() error {
 func (tk *Task) OnStopping() {
 	tk.FastClient.Destroy()
 	log.Info("stop called")
+	panic("")
 	return
 }
 
@@ -61,11 +63,15 @@ func (tk *Task) Flow() {
 		tk.OauthPost,
 		tk.OauthSession,
 		tk.Login,
+		tk.OauthSession,
 		tk.WaitForInstock,
+		tk.OauthAuthCode,
 		tk.ATC,
-		tk.RefreshCartId,
 		tk.SubmitShipping,
-		tk.SubmitPayment,
+		tk.RefreshCartId,
+		tk.SubmitCVV,
+		tk.PaymentOauth,
+		tk.SubmitCheckout,
 	}
 
 	for _, f := range funcarr {

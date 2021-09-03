@@ -37,7 +37,7 @@ func init() {
 func TestModule(t *testing.T) {
 	subToken, controlToken := uuid.NewString(), uuid.NewString()
 
-	productlink := "https://www.target.com/p/levi-s-men-s-512-slim-fit-taper-jeans/-/A-79691588"
+	productlink := "https://www.target.com/p/chuckle-38-roar-pop-it-fidget-and-sensory-game-tie-dye/-/A-81969353"
 
 	ip := "localhost"
 	port := "8866"
