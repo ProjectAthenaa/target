@@ -15,7 +15,7 @@ func init() {
 		name = strings.Split(podName, "-")[0]
 	}
 
-	fieldKey := "TARGET_link"
+	fieldKey := "LOOKUP_link"
 
 	Module = &sonic.Module{
 		Name: name,
