@@ -83,8 +83,6 @@ func (tk *Task) Login() {
 		tk.SetStatus(module.STATUS_ERROR, "error generating shape headers")
 	}
 
-	fmt.Println(headers.Values)
-
 	for k, v := range headers.Values {
 		req.Headers[k] = []string{v}
 	}
