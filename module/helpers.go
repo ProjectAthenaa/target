@@ -93,3 +93,46 @@ func (tk *Task) OauthAuthCode(){
 		return
 	}
 }
+
+func (tk *Task) ClearCart(){
+	req, err := tk.NewRequest("GET", "https://carts.target.com/web_checkouts/v1/cart_views?field_groups=CART%2CCART_ITEMS", nil)
+	if err != nil{
+		tk.SetStatus(module.STATUS_ERROR, "could not create clear cart request")
+		tk.Stop()
+		return
+	}
+	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com")
+
+	res, err := tk.Do(req)
+	if err != nil{
+		tk.SetStatus(module.STATUS_ERROR, "could not post clear cart request")
+		tk.Stop()
+		return
+	}
+
+	if res.StatusCode == 403{
+		tk.SetStatus(module.STATUS_ERROR, "could not clear cart, likely proxy error")
+		return
+	}
+
+	for _, sm := range cartItemIdRe.FindAllSubmatch(res.Body, -1){
+		delreq, delerr := tk.NewRequest("DELETE", fmt.Sprintf(`https://carts.target.com/web_checkouts/v1/cart_items/%s?cart_type=REGULAR&field_groups=CART%%2CCART_ITEMS%%2CSUMMARY%%2CPROMOTION_CODES%%2CADDRESSES&key=%s`, string(sm[1]), tk.apikey), nil)
+		if delerr != nil{
+			tk.SetStatus(module.STATUS_ERROR, "could not create clear cart request")
+			tk.Stop()
+			return
+		}
+		delreq.Headers = tk.GenerateDefaultHeaders("https://www.target.com")
+
+		delres, delerr := tk.Do(delreq)
+		if delerr != nil{
+			tk.SetStatus(module.STATUS_ERROR, "could not post clear cart request")
+			tk.Stop()
+			return
+		}
+
+		if delres.StatusCode != 200{
+			tk.SetStatus(module.STATUS_ERROR, "could not delete item " + string(sm[1]))
+		}
+	}
+}

@@ -66,6 +66,7 @@ func (tk *Task) Flow() {
 		tk.OauthSession,
 		tk.WaitForInstock,
 		tk.OauthAuthCode,
+		tk.ClearCart,
 		tk.ATC,
 		tk.SubmitShipping,
 		tk.RefreshCartId,
