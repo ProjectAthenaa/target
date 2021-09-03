@@ -2,6 +2,7 @@ package module
 
 import (
 	"context"
+	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic"
 	"github.com/ProjectAthenaa/sonic-core/sonic/antibots/shape"
@@ -33,6 +34,8 @@ func init() {
 }
 
 func (s Server) Task(_ context.Context, data *module.Data) (*module.StartResponse, error) {
+	v, _ := json.Marshal(data)
+	fmt.Println(string(v))
 	task := NewTask(data)
 	if err := task.Start(data); err != nil {
 		return nil, err
