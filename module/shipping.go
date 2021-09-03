@@ -3,7 +3,6 @@ package module
 import (
 	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
-	"github.com/prometheus/common/log"
 	"strings"
 )
 
@@ -23,7 +22,6 @@ func (tk *Task) NearestStore() {
 		return
 	}
 	if res.StatusCode == 401 {
-		log.Info(string(res.Body))
 		tk.RefreshToken()
 		tk.NearestStore()
 		return

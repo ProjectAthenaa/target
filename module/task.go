@@ -5,13 +5,13 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/base"
 	"github.com/ProjectAthenaa/sonic-core/sonic/face"
-	"github.com/prometheus/common/log"
 )
 
 var _ face.ICallback = (*Task)(nil)
 
 type Task struct {
 	*base.BTask
+	logincount			 int
 	pid                  string
 	apikey               string
 	cartid               string
@@ -33,6 +33,7 @@ func NewTask(data *module.Data) *Task {
 }
 
 func (tk *Task) OnInit() {
+	tk.logincount = 0
 	return
 }
 func (tk *Task) OnPreStart() error {
@@ -50,7 +51,6 @@ func (tk *Task) OnPause() error {
 }
 func (tk *Task) OnStopping() {
 	tk.FastClient.Destroy()
-	log.Info("stop called")
 	panic("")
 	return
 }
