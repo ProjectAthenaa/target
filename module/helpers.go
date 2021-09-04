@@ -17,6 +17,7 @@ var (
 	locationIdRe         = regexp.MustCompile(`"location_id":"(\d+)"`)
 	guestIdRe            = regexp.MustCompile(`"targetGuid":"(\d+)"`)
 	apikeyRe             = regexp.MustCompile(`"apiKey":"(\w+)"`)
+	loginErrRe           = regexp.MustCompile(`"errorKey":\s*"(\w+)"`)
 	json                 = jsoniter.ConfigFastest
 )
 

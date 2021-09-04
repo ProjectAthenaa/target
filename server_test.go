@@ -39,10 +39,10 @@ func TestModule(t *testing.T) {
 
 	productlink := "https://www.target.com/p/chuckle-38-roar-pop-it-fidget-and-sensory-game-tie-dye/-/A-81969353"
 
-	//username := "9727bcdc9173e7516691438ab8fde5dc725395482e2e49938ed5aa0343eb1fccca9c0985efde687f2653b55eae32b1090cd0791d3a97ac4d5a46031cbf59651f7780b6c7dd951b0a0948fd1ed00b2cac"
-	//password := "d3ocxl57dd22"
-	//ip := "proxy.oculus-proxy.com"
-	//port := "31111"
+	//username := "1moewci2"
+	//password := "4k7cvljz"
+	//ip := "178.159.147.248"
+	//port := "65112"
 
 	ip := "localhost"
 	port := "8866"
@@ -85,8 +85,8 @@ func TestModule(t *testing.T) {
 		Proxy: &module.Proxy{
 			//Username: &username,
 			//Password: &password,
-			IP:       ip,
-			Port:     port,
+			IP:   ip,
+			Port: port,
 		},
 		TaskData: &module.TaskData{
 			RandomSize:  false,

@@ -5,7 +5,6 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/antibots/shape"
 	"log"
-	"strings"
 	"time"
 )
 
@@ -60,9 +59,7 @@ func (tk *Task) OauthSession() {
 		tk.Stop()
 		return
 	}
-
-	log.Println(string(res.Body))
-
+	
 	if v := authCodeRe.FindSubmatch(res.Body); len(v) == 2 {
 		tk.authcode = string(v[1])
 	}
@@ -80,13 +77,12 @@ func (tk *Task) Login() {
 	tk.FastClient.Jar.Set("sapphire", "1")
 	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com/login?client_id=ecom-web-1.0.0&ui_namespace=ui-default&back_button_action=browser&keep_me_signed_in=true&kmsi_default=false&actions=create_session_signin")
 
-	tk.SetStatus(module.STATUS_GENERATING_COOKIES, "waiting for shape")
+	tk.SetStatus(module.STATUS_GENERATING_COOKIES)
 	headers, err := shapeClient.GenHeaders(tk.Ctx, &shape.Site{Value: shape.SITE_TARGET})
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "error generating shape headers")
 	}
 
-	log.Println(headers.Values)
 	for k, v := range headers.Values {
 		req.Headers[k] = []string{v}
 	}
@@ -101,16 +97,17 @@ func (tk *Task) Login() {
 		return
 	}
 
-	if strings.Contains(string(res.Body), "_ERR_AUTH_DENIED") && tk.logincount < 3 {
+	if e := loginErrRe.FindStringSubmatch(string(res.Body)); len(e) == 2 && tk.logincount < 3 {
+		log.Println("Login Error: ", e[1])
 		tk.logincount++
 		tk.Login()
 		return
 	} else if tk.logincount >= 3 {
-		tk.SetStatus(module.STATUS_ERROR, "shape error")
+		tk.SetStatus(module.STATUS_ERROR, "login err "+e[1])
 		tk.Stop()
 		return
 	}
-
+	fmt.Println(string(res.Body))
 	tk.guestid = guestIdRe.FindStringSubmatch(string(res.Body))[1]
 	tk.SetStatus(module.STATUS_LOGGED_IN)
 }
