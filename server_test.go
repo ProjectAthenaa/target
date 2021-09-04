@@ -39,13 +39,13 @@ func TestModule(t *testing.T) {
 
 	productlink := "https://www.target.com/p/chuckle-38-roar-pop-it-fidget-and-sensory-game-tie-dye/-/A-81969353"
 
-	//username := "1moewci2"
-	//password := "4k7cvljz"
-	//ip := "178.159.147.248"
-	//port := "65112"
+	username := "1moewci2"
+	password := "4k7cvljz"
+	ip := "178.159.147.248"
+	port := "65112"
 
-	ip := "localhost"
-	port := "8866"
+	//ip := "localhost"
+	//port := "8866"
 
 	tk := &module.Data{
 		TaskID: uuid.NewString(),
