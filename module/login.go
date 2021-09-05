@@ -5,6 +5,7 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/antibots/shape"
 	"log"
+	"strings"
 	"time"
 )
 
@@ -66,58 +67,42 @@ func (tk *Task) OauthSession() {
 
 }
 
-func (tk *Task) GetResString() (*string) {
-	req, err := tk.NewRequest("GET", "https://assets.targetimg1.com/ssx/ssx.mod.js?async", nil)
+func (tk *Task) GetResString() *string {
+	req, err := tk.FastClient.NewRequest("GET", "https://assets.targetimg1.com/ssx/ssx.mod.js?async", nil)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "couldnt create get req to base script for ponos")
 		tk.Stop()
 		return nil
 	}
+
 	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com")
 
-	res, err := tk.Do(req)
+	res, err := tk.FastClient.Do(req)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "couldnt get base script for ponos")
 		tk.Stop()
 		return nil
 	}
 
-	req, err = tk.NewRequest("GET", fmt.Sprintf("https://ponos.zeronaught.com/0?a=22a94427081eb8b3faade27031c844aeedb00212&b=%s&c=1037328191", string(shapeSeedRe.FindSubmatch(res.Body)[1])), nil)
+	req, err = tk.FastClient.NewRequest("GET", fmt.Sprintf("https://ponos.zeronaught.com/0?a=22a94427081eb8b3faade27031c844aeedb00212&b=%s&c=1037328191", string(shapeSeedRe.FindSubmatch(res.Body)[1])), nil)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR)
 		tk.Stop()
 		return nil
 	}
+
+	tk.FastClient.ResetH2()
+
 	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com/login?client_id=ecom-web-1.0.0&ui_namespace=ui-default&back_button_action=browser&keep_me_signed_in=true&kmsi_default=false&actions=create_session_signin")
-
-	res, err = tk.Do(req)
+	res, err = tk.FastClient.Do(req)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR)
 		tk.Stop()
 		return nil
 	}
 
-	resString := string(res.Body)
-
-	//proxyUrl, err := url.Parse("http://"+*tk.FormatProxy())
-	//if err != nil{
-	//	tk.SetStatus(module.STATUS_ERROR, "couldnt format proxy for ponos")
-	//	tk.Stop()
-	//	return nil
-	//}
-	//client := nethttp.Client{Transport: &nethttp.Transport{Proxy: nethttp.ProxyURL(proxyUrl)}}
-	//ponosRes, err := client.Get(fmt.Sprintf("https://ponos.zeronaught.com/0?a=22a94427081eb8b3faade27031c844aeedb00212&b=%s&c=1037328191", string(shapeSeedRe.FindSubmatch(res.Body)[1])))
-	//if err != nil{
-	//	tk.SetStatus(module.STATUS_ERROR, "couldnt get ponos")
-	//	tk.Stop()
-	//	return nil
-	//}
-	//defer ponosRes.Body.Close()
-	//resString, err := ioutil.ReadAll(ponosRes.Body)
-
-	log.Println(string(resString))
-	retString := string(resString)
-	return &retString
+	resString := strings.ReplaceAll(string(res.Body), " ", "")
+	return &resString
 }
 
 func (tk *Task) Login() {
