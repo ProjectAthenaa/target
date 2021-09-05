@@ -86,8 +86,8 @@ func TestModule(t *testing.T) {
 		Proxy: &module.Proxy{
 			Username: &username,
 			Password: &password,
-			IP:   ip,
-			Port: port,
+			IP:       ip,
+			Port:     port,
 		},
 		TaskData: &module.TaskData{
 			RandomSize:  false,
@@ -98,8 +98,8 @@ func TestModule(t *testing.T) {
 		},
 		Metadata: map[string]string{
 			"username":                        "terrydavis903@gmail.com",
-			"password":                        "0o0p0o0P!A",
-			"UserID":							"e99fa929-f1f2-4aad-b782-bfe6772fb2fc",
+			"password":                        "0o0p0o0P!.",
+			"UserID":                          "e99fa929-f1f2-4aad-b782-bfe6772fb2fc",
 			*config.Module.Fields[0].FieldKey: productlink,
 		},
 		Channels: &module.Channels{

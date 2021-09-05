@@ -60,42 +60,43 @@ func (tk *Task) OnStopping() {
 }
 
 func (tk *Task) GetSession() {
-	tk.sessionLock.Lock()
-	defer tk.sessionLock.Unlock()
-	funcArr := []func(){
-		tk.APIKey,
-		tk.InitData,
-		tk.NearestStore,
-		tk.OauthPost,
-		tk.OauthSession,
-		tk.Login,
-		tk.CheckDetails,
-		tk.OauthSession,
-		tk.ClearCart,
-		tk.OauthAuthCode,
-	}
-
-	for _, f := range funcArr {
-		select {
-		case <-tk.Ctx.Done():
-			return
-		default:
-			f()
+	go func() {
+		tk.sessionLock.Lock()
+		defer tk.sessionLock.Unlock()
+		funcArr := []func(){
+			tk.OauthPost,
+			tk.OauthSession,
+			tk.Login,
+			tk.CheckDetails,
+			tk.OauthSession,
+			tk.ClearCart,
+			tk.OauthAuthCode,
 		}
-	}
+
+		for _, f := range funcArr {
+			select {
+			case <-tk.Ctx.Done():
+				return
+			default:
+				f()
+			}
+		}
+	}()
 
 }
 
 func (tk *Task) Flow() {
-	go tk.GetSession()
 	funcArr := []func(){
+		tk.InitData,
+		tk.NearestStore, //add cache for nearest store
+		tk.GetSession,   //optimise get session
 		tk.WaitForInstock,
 		tk.sessionLock.Lock,
 		tk.ATC,
-		tk.SubmitShipping,
-		tk.RefreshCartId,
-		tk.SubmitCVV,
-		tk.PaymentOauth,
+		tk.SubmitShipping, //remove once better implementation is done
+		tk.RefreshCartId,  //do we really need it?
+		tk.SubmitCVV,      //remove once better implementation is done
+		tk.PaymentOauth,   //do we really need it?
 		tk.SubmitCheckout,
 	}
 
