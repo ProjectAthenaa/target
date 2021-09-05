@@ -100,7 +100,6 @@ func (tk *Task) Login() {
 
 	tk.SetStatus(module.STATUS_GENERATING_COOKIES)
 
-	//todo allow it to take an extra optional param in (string) as last argument. which is the ponos.zeronaught response string.
 	resString, err := tk.GetResString()
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "error making ponos request")
@@ -108,6 +107,7 @@ func (tk *Task) Login() {
 		return
 	}
 
+	//todo allow it to take an extra optional param in (string) as last argument. which is the ponos.zeronaught response string.
 	headers, err := shapeClient.GenHeaders(tk.Ctx, &shape.Site{Value: shape.SITE_TARGET})
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "error generating shape headers")
