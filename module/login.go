@@ -71,6 +71,7 @@ func (tk *Task) GetResString() (*string, error) {
 	if err != nil {
 		return nil, err
 	}
+	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com")
 
 	res, err := tk.Do(req)
 	if err != nil {
@@ -78,6 +79,10 @@ func (tk *Task) GetResString() (*string, error) {
 	}
 
 	req, err = tk.NewRequest("GET", fmt.Sprintf("https://ponos.zeronaught.com/0?a=22a94427081eb8b3faade27031c844aeedb00212&b=%s&c=1037328191", string(shapeSeedRe.FindSubmatch(res.Body)[1])), nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com")
 
 	res, err = tk.Do(req)
 	if err != nil {
