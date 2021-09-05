@@ -9,7 +9,7 @@ import (
 func (tk *Task) NearestStore() {
 	req, err := tk.NewRequest("GET", fmt.Sprintf("https://api.target.com/shipt_deliveries/v1/stores?zip=%s&key=%s", tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.apikey), nil)
 	if err != nil {
-		tk.SetStatus(module.STATUS_ERROR, "error creating find store request")
+		tk.SetStatus(module.STATUS_ERROR, err, "error creating find store request")
 		tk.Stop()
 		return
 	}
@@ -17,7 +17,7 @@ func (tk *Task) NearestStore() {
 
 	res, err := tk.Do(req)
 	if err != nil {
-		tk.SetStatus(module.STATUS_ERROR, "error making find store request")
+		tk.SetStatus(module.STATUS_ERROR, err, "error making find store request")
 		tk.Stop()
 		return
 	}
@@ -31,7 +31,7 @@ func (tk *Task) NearestStore() {
 }
 
 func (tk *Task) SubmitShipping() {
-	tk.SetStatus(module.STATUS_SUBMITTING_SHIPPING)
+	tk.SetStatus(module.STATUS_SUBMITTING_SHIPPING, err)
 
 	//threatmatrix.SendRequests(tk.cartid)
 
@@ -44,7 +44,7 @@ func (tk *Task) SubmitShipping() {
 
 	req, err := tk.NewRequest("POST", fmt.Sprintf("https://carts.target.com/web_checkouts/v1/cart_shipping_addresses?field_groups=ADDRESSES%%2CCART%%2CCART_ITEMS%%2CPICKUP_INSTRUCTIONS%%2CPROMOTION_CODES%%2CSUMMARY%%2CFINANCE_PROVIDERS&key=%s", tk.apikey), []byte(form))
 	if err != nil {
-		tk.SetStatus(module.STATUS_ERROR, "error creating shipping request")
+		tk.SetStatus(module.STATUS_ERROR, err, "error creating shipping request")
 		tk.Stop()
 		return
 	}
@@ -52,12 +52,12 @@ func (tk *Task) SubmitShipping() {
 
 	res, err := tk.Do(req)
 	if err != nil {
-		tk.SetStatus(module.STATUS_ERROR, "error making shipping request")
+		tk.SetStatus(module.STATUS_ERROR, err, "error making shipping request")
 		tk.Stop()
 		return
 	}
 
-	if strings.Contains(string(res.Body), "ADDRESS_ALREADY_PRESENT"){
+	if strings.Contains(string(res.Body), "ADDRESS_ALREADY_PRESENT") {
 		return
 	}
 }

@@ -29,7 +29,7 @@ type StockInfo struct {
 func (tk *Task) InitData() {
 	req, err := tk.NewRequest("GET", tk.Data.Metadata[*config.Module.Fields[0].FieldKey], nil)
 	if err != nil {
-		tk.SetStatus(module.STATUS_ERROR, "could not fetch product page")
+		tk.SetStatus(module.STATUS_ERROR, err, "could not fetch product page")
 		tk.Stop()
 		return
 	}
@@ -38,7 +38,7 @@ func (tk *Task) InitData() {
 
 	res, err := tk.Do(req)
 	if err != nil {
-		tk.SetStatus(module.STATUS_ERROR, "could not read product page")
+		tk.SetStatus(module.STATUS_ERROR, err, "could not read product page")
 		tk.Stop()
 		return
 	}
@@ -51,7 +51,7 @@ func (tk *Task) WaitForInstock() {
 	var found int32
 	var wg sync.WaitGroup
 
-	tk.SetStatus(module.STATUS_MONITORING, "waiting for instock")
+	tk.SetStatus(module.STATUS_MONITORING, err, "waiting for instock")
 
 	for i := 0; i < 5; i++ {
 		wg.Add(1)
@@ -60,14 +60,14 @@ func (tk *Task) WaitForInstock() {
 			for found == 0 {
 				req, err := tk.NewRequest("GET", fmt.Sprintf(`https://redsky.target.com/redsky_aggregations/v1/web/pdp_fulfillment_v1?key=%s&tcin=%s&store_id=%s&store_positions_store_id=%s&has_store_positions_store_id=true&zip=%s&state=NJ&scheduled_delivery_store_id=%s&pricing_store_id=%s&has_pricing_store_id=true&is_bot=false`, tk.apikey, tk.pid, tk.storeid, tk.storeid, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.storeid, tk.storeid), nil)
 				if err != nil {
-					tk.SetStatus(module.STATUS_ERROR, "could not fetch product availability")
+					tk.SetStatus(module.STATUS_ERROR, err, "could not fetch product availability")
 					tk.Stop()
 					return
 				}
 
 				res, err := tk.Do(req)
 				if err != nil {
-					tk.SetStatus(module.STATUS_ERROR, err.Error())
+					tk.SetStatus(module.STATUS_ERROR, err, err.Error())
 					tk.Stop()
 					return
 				}
@@ -82,5 +82,5 @@ func (tk *Task) WaitForInstock() {
 	}
 
 	wg.Wait()
-	tk.SetStatus(module.STATUS_PRODUCT_FOUND, "")
+	tk.SetStatus(module.STATUS_PRODUCT_FOUND, err, "")
 }
