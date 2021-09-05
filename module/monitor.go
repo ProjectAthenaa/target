@@ -51,7 +51,7 @@ func (tk *Task) WaitForInstock() {
 	var found int32
 	var wg sync.WaitGroup
 
-	tk.SetStatus(module.STATUS_MONITORING, err, "waiting for instock")
+	tk.SetStatus(module.STATUS_MONITORING, "waiting for instock")
 
 	for i := 0; i < 5; i++ {
 		wg.Add(1)
@@ -82,5 +82,5 @@ func (tk *Task) WaitForInstock() {
 	}
 
 	wg.Wait()
-	tk.SetStatus(module.STATUS_PRODUCT_FOUND, err, "")
+	tk.SetStatus(module.STATUS_PRODUCT_FOUND, "")
 }

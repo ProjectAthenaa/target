@@ -8,7 +8,7 @@ import (
 
 func (tk *Task) ATC() {
 
-	tk.SetStatus(module.STATUS_ADDING_TO_CART, err)
+	tk.SetStatus(module.STATUS_ADDING_TO_CART)
 
 	req, err := tk.NewRequest("POST", fmt.Sprintf("https://carts.target.com/web_checkouts/v1/cart_items?field_groups=CART%%2CCART_ITEMS%%2CSUMMARY%%2CFINANCE_PROVIDERS&key=%s", tk.apikey), []byte(fmt.Sprintf(`{"cart_type":"REGULAR","channel_id":10,"shopping_context":"DIGITAL","cart_item":{"tcin":"%s","quantity":1,"item_channel_id":"10"}}`, tk.pid)))
 	if err != nil {

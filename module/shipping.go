@@ -31,7 +31,7 @@ func (tk *Task) NearestStore() {
 }
 
 func (tk *Task) SubmitShipping() {
-	tk.SetStatus(module.STATUS_SUBMITTING_SHIPPING, err)
+	tk.SetStatus(module.STATUS_SUBMITTING_SHIPPING)
 
 	//threatmatrix.SendRequests(tk.cartid)
 

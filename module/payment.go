@@ -8,7 +8,7 @@ import (
 )
 
 func (tk *Task) RefreshCartId() {
-	tk.SetStatus(module.STATUS_CHECKING_OUT, err, "refreshing cart")
+	tk.SetStatus(module.STATUS_CHECKING_OUT, "refreshing cart")
 	req, err := tk.NewRequest("POST", fmt.Sprintf("https://carts.target.com/web_checkouts/v1/pre_checkout?field_groups=ADDRESSES%%2CCART%%2CCART_ITEMS%%2CDELIVERY_WINDOWS%%2CPAYMENT_INSTRUCTIONS%%2CPICKUP_INSTRUCTIONS%%2CPROMOTION_CODES%%2CSUMMARY%%2CFINANCE_PROVIDERS&key=%s", tk.apikey), []byte(`{"cart_type":"REGULAR"}`))
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, err, "error creating cartid refresh request")
@@ -35,7 +35,7 @@ func (tk *Task) RefreshCartId() {
 }
 
 func (tk *Task) SubmitPayment() {
-	tk.SetStatus(module.STATUS_SUBMITTING_PAYMENT, err)
+	tk.SetStatus(module.STATUS_SUBMITTING_PAYMENT)
 	var form string
 
 	if tk.Data.Profile.Shipping.BillingIsShipping {
@@ -153,7 +153,7 @@ func (tk *Task) PaymentOauth() {
 }
 
 func (tk *Task) SubmitCheckout() {
-	tk.SetStatus(module.STATUS_SUBMITTING_CHECKOUT, err)
+	tk.SetStatus(module.STATUS_SUBMITTING_CHECKOUT)
 	//req, err := tk.NewRequest("POST", `https://carts.target.com/web_checkouts/v1/checkout?field_groups=ADDRESSES%2CCART%2CCART_ITEMS%2CDELIVERY_WINDOWS%2CPAYMENT_INSTRUCTIONS%2CPICKUP_INSTRUCTIONS%2CPROMOTION_CODES%2CSUMMARY%2CFINANCE_PROVIDERS&key=feaf228eb2777fd3eee0fd5192ae7107d6224b39`, []byte(`{"cart_type":"REGULAR","channel_id":10}`))
 	req, err := tk.NewRequest("POST", fmt.Sprintf("https://carts.target.com/web_checkouts/v1/checkout?field_groups=ADDRESSES%%2CCART%%2CCART_ITEMS%%2CDELIVERY_WINDOWS%%2CPAYMENT_INSTRUCTIONS%%2CPICKUP_INSTRUCTIONS%%2CPROMOTION_CODES%%2CSUMMARY%%2CFINANCE_PROVIDERS&key=%s", tk.apikey), []byte(`{"cart_type":"REGULAR","channel_id":10}`))
 	if err != nil {
