@@ -66,25 +66,27 @@ func (tk *Task) OauthSession() {
 
 }
 
-func (tk *Task) GetResString() (string, error) {
+func (tk *Task) GetResString() (*string, error) {
 	req, err := tk.NewRequest("GET", "https://assets.targetimg1.com/ssx/ssx.mod.js?async", nil)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	res, err := tk.Do(req)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	req, err = tk.NewRequest("GET", fmt.Sprintf("https://ponos.zeronaught.com/0?a=22a94427081eb8b3faade27031c844aeedb00212&b=%s&c=1037328191", string(shapeSeedRe.FindSubmatch(res.Body)[1])), nil)
 
 	res, err = tk.Do(req)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return string(res.Body), nil
+	resString := string(res.Body)
+
+	return &resString, nil
 }
 
 func (tk *Task) Login() {
@@ -107,8 +109,7 @@ func (tk *Task) Login() {
 		return
 	}
 
-	//todo allow it to take an extra optional param in (string) as last argument. which is the ponos.zeronaught response string.
-	headers, err := shapeClient.GenHeaders(tk.Ctx, &shape.Site{Value: shape.SITE_TARGET})
+	headers, err := shapeClient.GenHeaders(tk.Ctx, &shape.Site{Value: shape.SITE_TARGET, ResString: resString})
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "error generating shape headers")
 	}
