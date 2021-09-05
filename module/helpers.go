@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	shapeSeedRe			 = regexp.MustCompile(`init\((".*?")`)
+	shapeSeedRe			 = regexp.MustCompile(`init\("(.*?)"`)
 	orderTotalRe         = regexp.MustCompile(`"total_authorization_amount":(\d+\.\d+)`)
 	paymentInstructionRe = regexp.MustCompile(`"payment_instruction_id":"([\w-]+)"`)
 	authCodeRe           = regexp.MustCompile(`"auth_code":"([\w-]+)"`)

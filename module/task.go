@@ -42,6 +42,10 @@ func (tk *Task) OnStarting() {
 	tk.FastClient.CreateCookieJar()
 	tk.FastClient.Jar.Set("UserLocation", fmt.Sprintf(`%s|||%s|%s`, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.Country))
 	tk.FastClient.Jar.Set("hasApp", "false")
+
+	//req,_ := tk.NewRequest("GET","https://www.google.com",nil)
+	//res, _ := tk.DoLocalhost(req)
+	//log.Println(string(res.Body))
 	tk.Flow()
 }
 func (tk *Task) OnPause() error {
