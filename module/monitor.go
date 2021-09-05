@@ -38,6 +38,7 @@ func (tk *Task) InitData() {
 
 	res, err := tk.Do(req)
 	if err != nil {
+		fmt.Println(err)
 		tk.SetStatus(module.STATUS_ERROR, err, "could not read product page")
 		tk.Stop()
 		return
