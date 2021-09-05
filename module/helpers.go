@@ -19,6 +19,7 @@ var (
 	guestIdRe            = regexp.MustCompile(`"targetGuid":"(\d+)"`)
 	apikeyRe             = regexp.MustCompile(`"apiKey":"(\w+)"`)
 	loginErrRe           = regexp.MustCompile(`"errorKey":\s*"(\w+)"`)
+	totalCountRe         = regexp.MustCompile(`"totalCount":\s*(\d+)`)
 	json                 = jsoniter.ConfigFastest
 )
 
@@ -136,5 +137,48 @@ func (tk *Task) ClearCart() {
 		if delres.StatusCode != 200 {
 			tk.SetStatus(module.STATUS_ERROR, "could not delete item "+string(sm[1]))
 		}
+	}
+}
+
+func (tk *Task) CheckDetails() {
+	go func() {
+		req, err := tk.NewRequest("GET", fmt.Sprintf("https://profile.target.com/WalletWEB/wallet/v5/tenders?key=%s&savings=true", tk.apikey), nil)
+		if err != nil {
+			tk.SetStatus(module.STATUS_ERROR, "could not check payment methods")
+			tk.Stop()
+			return
+		}
+
+		req.Headers = tk.GenerateDefaultHeaders("https://www.target.com/account/payments")
+
+		res, err := tk.Do(req)
+		if err != nil {
+			tk.SetStatus(module.STATUS_ERROR, "could not check payment methods")
+			tk.Stop()
+			return
+		}
+
+		if match := totalCountRe.FindStringSubmatch(string(res.Body)); len(match) == 2 && match[1] >= "1" {
+			tk.submitCVV = false
+		}
+	}()
+
+	req, err := tk.NewRequest("GET", fmt.Sprintf("https://api.target.com/guest_addresses/v1/addresses?key=%s", tk.apikey), nil)
+	if err != nil {
+		tk.SetStatus(module.STATUS_ERROR, "could not check addresses")
+		tk.Stop()
+		return
+	}
+
+	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com/account/addresses")
+
+	res, err := tk.Do(req)
+	if err != nil {
+		tk.SetStatus(module.STATUS_ERROR, "could not check addresses")
+		tk.Stop()
+	}
+
+	if match := totalCountRe.FindStringSubmatch(string(res.Body)); len(match) == 2 && match[1] >= "1" {
+		tk.submitAddress = false
 	}
 }

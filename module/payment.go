@@ -110,6 +110,9 @@ func (tk *Task) CompareCard() {
 }
 
 func (tk *Task) SubmitCVV() {
+	if !tk.submitCVV {
+		return
+	}
 	req, err := tk.NewRequest("PUT", fmt.Sprintf("https://carts.target.com/checkout_payments/v1/payment_instructions/%s?key=%s", tk.paymentinstructionid, tk.apikey), []byte(fmt.Sprintf(`{"cart_id":"%s","wallet_mode":"NONE","payment_type":"CARD","card_details":{"cvv":"%s"}}`, tk.cartid, tk.Data.Profile.Billing.CVV)))
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "error creating cvv request")

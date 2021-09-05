@@ -5,6 +5,7 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/base"
 	"github.com/ProjectAthenaa/sonic-core/sonic/face"
+	"sync"
 )
 
 var _ face.ICallback = (*Task)(nil)
@@ -21,6 +22,9 @@ type Task struct {
 	paymentinstructionid string
 	authcode             string
 	imagelink            string
+	submitCVV            bool
+	submitAddress        bool
+	sessionLock          *sync.Mutex
 }
 
 func NewTask(data *module.Data) *Task {
@@ -32,6 +36,7 @@ func NewTask(data *module.Data) *Task {
 
 func (tk *Task) OnInit() {
 	tk.logincount = 0
+	tk.sessionLock = &sync.Mutex{}
 	return
 }
 func (tk *Task) OnPreStart() error {
@@ -54,18 +59,38 @@ func (tk *Task) OnStopping() {
 	return
 }
 
-func (tk *Task) Flow() {
-	funcarr := []func(){
+func (tk *Task) GetSession() {
+	tk.sessionLock.Lock()
+	defer tk.sessionLock.Unlock()
+	funcArr := []func(){
 		tk.APIKey,
 		tk.InitData,
 		tk.NearestStore,
 		tk.OauthPost,
 		tk.OauthSession,
 		tk.Login,
+		tk.CheckDetails,
 		tk.OauthSession,
-		tk.WaitForInstock,
-		tk.OauthAuthCode,
 		tk.ClearCart,
+		tk.OauthAuthCode,
+	}
+
+	for _, f := range funcArr {
+		select {
+		case <-tk.Ctx.Done():
+			return
+		default:
+			f()
+		}
+	}
+
+}
+
+func (tk *Task) Flow() {
+	go tk.GetSession()
+	funcArr := []func(){
+		tk.WaitForInstock,
+		tk.sessionLock.Lock,
 		tk.ATC,
 		tk.SubmitShipping,
 		tk.RefreshCartId,
@@ -74,9 +99,10 @@ func (tk *Task) Flow() {
 		tk.SubmitCheckout,
 	}
 
-	for _, f := range funcarr {
+	for _, f := range funcArr {
 		select {
 		case <-tk.Ctx.Done():
+			tk.sessionLock.Unlock()
 			return
 		default:
 			f()
