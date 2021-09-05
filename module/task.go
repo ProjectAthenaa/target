@@ -82,13 +82,12 @@ func (tk *Task) GetSession() {
 			}
 		}
 	}()
-
 }
 
 func (tk *Task) Flow() {
 	funcArr := []func(){
-		tk.InitData,
-		tk.NearestStore, //add cache for nearest store
+		tk.InitData,     //InitData and NearestStore have to be done before monitoring as they fill in critical variables like apikey and storeid
+		tk.NearestStore, //add cache for nearest store?
 		tk.GetSession,   //optimise get session
 		tk.WaitForInstock,
 		tk.sessionLock.Lock,
