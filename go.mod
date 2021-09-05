@@ -30,7 +30,6 @@ require (
 	github.com/graphql-go/graphql v0.8.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
-	github.com/kiwiedcase/http2 v0.0.0-20210818195829-33d8a0fd59ab // indirect
 	github.com/klauspost/compress v1.13.5 // indirect
 	github.com/lib/pq v1.10.3 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
