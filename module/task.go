@@ -38,7 +38,7 @@ func (tk *Task) OnPreStart() error {
 	return nil
 }
 func (tk *Task) OnStarting() {
-	tk.SetStatus(module.STATUS_STARTING, err, "starting task")
+	tk.SetStatus(module.STATUS_STARTING, "starting task")
 	tk.FastClient.CreateCookieJar()
 	tk.FastClient.Jar.Set("UserLocation", fmt.Sprintf(`%s|||%s|%s`, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.Country))
 	tk.FastClient.Jar.Set("hasApp", "false")
