@@ -59,11 +59,32 @@ func (tk *Task) OauthSession() {
 		tk.Stop()
 		return
 	}
-	
+
 	if v := authCodeRe.FindSubmatch(res.Body); len(v) == 2 {
 		tk.authcode = string(v[1])
 	}
 
+}
+
+func (tk *Task) GetResString() (string, error) {
+	req, err := tk.NewRequest("GET", "https://assets.targetimg1.com/ssx/ssx.mod.js?async", nil)
+	if err != nil {
+		return "", err
+	}
+
+	res, err := tk.Do(req)
+	if err != nil {
+		return "", err
+	}
+
+	req, err = tk.NewRequest("GET", fmt.Sprintf("https://ponos.zeronaught.com/0?a=22a94427081eb8b3faade27031c844aeedb00212&b=%s&c=1037328191", string(shapeSeedRe.FindSubmatch(res.Body)[1])), nil)
+
+	res, err = tk.Do(req)
+	if err != nil {
+		return "", err
+	}
+
+	return string(res.Body), nil
 }
 
 func (tk *Task) Login() {
@@ -78,6 +99,15 @@ func (tk *Task) Login() {
 	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com/login?client_id=ecom-web-1.0.0&ui_namespace=ui-default&back_button_action=browser&keep_me_signed_in=true&kmsi_default=false&actions=create_session_signin")
 
 	tk.SetStatus(module.STATUS_GENERATING_COOKIES)
+
+	//todo allow it to take an extra optional param in (string) as last argument. which is the ponos.zeronaught response string.
+	resString, err := tk.GetResString()
+	if err != nil {
+		tk.SetStatus(module.STATUS_ERROR, "error making ponos request")
+		tk.Stop()
+		return
+	}
+
 	headers, err := shapeClient.GenHeaders(tk.Ctx, &shape.Site{Value: shape.SITE_TARGET})
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "error generating shape headers")
