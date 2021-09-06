@@ -71,6 +71,7 @@ func (tk *Task) GetSession() {
 			tk.OauthSession,
 			tk.ClearCart,
 			tk.OauthAuthCode,
+			tk.RefreshCartId,  //do we really need it?
 		}
 
 		for _, f := range funcArr {
@@ -84,6 +85,8 @@ func (tk *Task) GetSession() {
 	}()
 }
 
+//	tk.NearestStore sets a storeid field of tk, you can do some db stuff if you want to cache, its stil called
+//	before monitor so no worries if not
 func (tk *Task) Flow() {
 	funcArr := []func(){
 		tk.InitData,     //InitData and NearestStore have to be done before monitoring as they fill in critical variables like apikey and storeid
@@ -92,10 +95,9 @@ func (tk *Task) Flow() {
 		tk.WaitForInstock,
 		tk.sessionLock.Lock,
 		tk.ATC,
-		tk.SubmitShipping, //remove once better implementation is done
-		tk.RefreshCartId,  //do we really need it?
-		tk.SubmitCVV,      //remove once better implementation is done
-		tk.PaymentOauth,   //do we really need it?
+		tk.SubmitShipping, //remove once better implementation is done, kiwi you did good job :)
+		tk.SubmitCVV,      //remove once better implementation is done, this seems to be mandatory regardless if theres a payment or not
+		//tk.PaymentOauth,   //do we really need it?
 		tk.SubmitCheckout,
 	}
 
