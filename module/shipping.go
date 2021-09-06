@@ -3,11 +3,20 @@ package module
 import (
 	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
+	"github.com/ProjectAthenaa/sonic-core/sonic/core"
 	"github.com/ProjectAthenaa/threatmatrix"
 	"strings"
+	"time"
 )
 
 func (tk *Task) NearestStore() {
+	val := core.Base.GetRedis("cache").Get(tk.Ctx, fmt.Sprintf("modules:target:storeids:%s", tk.Data.Profile.Shipping.ShippingAddress.ZIP)).Val()
+
+	if len(val) != 0 {
+		tk.storeid = val
+		return
+	}
+
 	req, err := tk.NewRequest("GET", fmt.Sprintf("https://api.target.com/shipt_deliveries/v1/stores?zip=%s&key=%s", tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.apikey), nil)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "error creating find store request")
@@ -29,6 +38,11 @@ func (tk *Task) NearestStore() {
 	}
 
 	tk.storeid = locationIdRe.FindStringSubmatch(string(res.Body))[1]
+
+	go func() {
+		core.Base.GetRedis("cache").Set(tk.Ctx, fmt.Sprintf("modules:target:storeids:%s", tk.Data.Profile.Shipping.ShippingAddress.ZIP), tk.storeid, time.Hour*168)
+	}()
+
 }
 
 func (tk *Task) SubmitShipping() {

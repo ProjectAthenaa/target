@@ -5,6 +5,7 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/base"
 	"github.com/ProjectAthenaa/sonic-core/sonic/face"
+	"github.com/prometheus/common/log"
 	"sync"
 )
 
@@ -71,7 +72,7 @@ func (tk *Task) GetSession() {
 			tk.OauthSession,
 			tk.ClearCart,
 			tk.OauthAuthCode,
-			tk.RefreshCartId,  //do we really need it?
+			tk.RefreshCartId, //do we really need it?
 		}
 
 		for _, f := range funcArr {
@@ -88,6 +89,13 @@ func (tk *Task) GetSession() {
 //	tk.NearestStore sets a storeid field of tk, you can do some db stuff if you want to cache, its stil called
 //	before monitor so no worries if not
 func (tk *Task) Flow() {
+	defer func() {
+		if err := recover(); err != nil {
+			log.Error(err)
+			tk.SetStatus(module.STATUS_ERROR, "internal error")
+			tk.Stop()
+		}
+	}()
 	funcArr := []func(){
 		tk.InitData,     //InitData and NearestStore have to be done before monitoring as they fill in critical variables like apikey and storeid
 		tk.NearestStore, //add cache for nearest store?
