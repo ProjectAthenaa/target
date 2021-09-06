@@ -128,6 +128,11 @@ func TestModule(t *testing.T) {
 		var data module.Status
 		_ = json.Unmarshal([]byte(msg.Payload), &data)
 		fmt.Println(data.Status, data.Information["message"])
+
+		if data.Status == module.STATUS_CHECKED_OUT {
+			fmt.Println(msg.Payload)
+		}
+
 		if data.Status == module.STATUS_STOPPED {
 			return
 		}

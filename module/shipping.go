@@ -11,7 +11,6 @@ import (
 
 func (tk *Task) NearestStore() {
 	val := core.Base.GetRedis("cache").Get(tk.Ctx, fmt.Sprintf("modules:target:storeids:%s", tk.Data.Profile.Shipping.ShippingAddress.ZIP)).Val()
-
 	if len(val) != 0 {
 		tk.storeid = val
 		return

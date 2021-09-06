@@ -191,7 +191,8 @@ func (tk *Task) SubmitCheckout() {
 	} else if strings.Contains(string(res.Body), "PAYMENT_DECLINED_EXCEPTION") {
 		tk.SetStatus(module.STATUS_CHECKOUT_DECLINE, "declined")
 	} else {
-		tk.SetStatus(module.STATUS_CHECKOUT_ERROR, "error")
+		errMessage := checkoutErrRe.FindStringSubmatch(string(res.Body))[1]
+		tk.SetStatus(module.STATUS_CHECKOUT_ERROR, errMessage)
 	}
 
 }

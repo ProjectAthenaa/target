@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	referenceIdRe		 = regexp.MustCompile(`"reference_id":"([\w-]+)"`)
+	referenceIdRe        = regexp.MustCompile(`"reference_id":"([\w-]+)"`)
 	shapeSeedRe          = regexp.MustCompile(`init\("(.*?)"`)
 	orderTotalRe         = regexp.MustCompile(`"total_authorization_amount":(\d+\.\d+)`)
 	paymentInstructionRe = regexp.MustCompile(`"payment_instruction_id":"([\w-]+)"`)
@@ -21,6 +21,7 @@ var (
 	apikeyRe             = regexp.MustCompile(`"apiKey":"(\w+)"`)
 	loginErrRe           = regexp.MustCompile(`"errorKey":\s*"(\w+)"`)
 	totalCountRe         = regexp.MustCompile(`"totalCount":\s*(\d+)`)
+	checkoutErrRe        = regexp.MustCompile(`"code":\s*"([\w-]+)"`)
 	json                 = jsoniter.ConfigFastest
 )
 
@@ -120,24 +121,27 @@ func (tk *Task) ClearCart() {
 	}
 
 	for _, sm := range cartItemIdRe.FindAllSubmatch(res.Body, -1) {
-		delreq, delerr := tk.NewRequest("DELETE", fmt.Sprintf(`https://carts.target.com/web_checkouts/v1/cart_items/%s?cart_type=REGULAR&field_groups=CART%%2CCART_ITEMS%%2CSUMMARY%%2CPROMOTION_CODES%%2CADDRESSES&key=%s`, string(sm[1]), tk.apikey), nil)
-		if delerr != nil {
-			tk.SetStatus(module.STATUS_ERROR, "could not create clear cart request")
-			tk.Stop()
-			return
-		}
-		delreq.Headers = tk.GenerateDefaultHeaders("https://www.target.com")
+		sm := sm
+		go func() {
+			delreq, delerr := tk.NewRequest("DELETE", fmt.Sprintf(`https://carts.target.com/web_checkouts/v1/cart_items/%s?cart_type=REGULAR&field_groups=CART%%2CCART_ITEMS%%2CSUMMARY%%2CPROMOTION_CODES%%2CADDRESSES&key=%s`, string(sm[1]), tk.apikey), nil)
+			if delerr != nil {
+				tk.SetStatus(module.STATUS_ERROR, "could not create clear cart request")
+				tk.Stop()
+				return
+			}
+			delreq.Headers = tk.GenerateDefaultHeaders("https://www.target.com")
 
-		delres, delerr := tk.Do(delreq)
-		if delerr != nil {
-			tk.SetStatus(module.STATUS_ERROR, "could not post clear cart request")
-			tk.Stop()
-			return
-		}
+			delres, delerr := tk.Do(delreq)
+			if delerr != nil {
+				tk.SetStatus(module.STATUS_ERROR, "could not post clear cart request")
+				tk.Stop()
+				return
+			}
 
-		if delres.StatusCode != 200 {
-			tk.SetStatus(module.STATUS_ERROR, "could not delete item "+string(sm[1]))
-		}
+			if delres.StatusCode != 200 {
+				tk.SetStatus(module.STATUS_ERROR, "could not delete item "+string(sm[1]))
+			}
+		}()
 	}
 }
 

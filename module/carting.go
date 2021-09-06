@@ -25,6 +25,7 @@ func (tk *Task) ATC() {
 		return
 	}
 
+	fmt.Println(string(res.Body))
 	tk.cartid = cartIdRe.FindStringSubmatch(string(res.Body))[1]
 	tk.cartitemid = cartItemIdRe.FindStringSubmatch(string(res.Body))[1]
 	tk.SetStatus(module.STATUS_ADDED_TO_CART)
