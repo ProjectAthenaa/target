@@ -98,7 +98,7 @@ func TestModule(t *testing.T) {
 		},
 		Metadata: map[string]string{
 			"username":                        "terrydavis903@gmail.com",
-			"password":                        "0o0p0o0P!.",
+			"password":                        "0o0p0o0P!!",
 			"UserID":                          "e99fa929-f1f2-4aad-b782-bfe6772fb2fc",
 			*config.Module.Fields[0].FieldKey: productlink,
 		},
@@ -124,16 +124,23 @@ func TestModule(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	var start time.Time
+
 	for msg := range pubsub.Channel() {
 		var data module.Status
 		_ = json.Unmarshal([]byte(msg.Payload), &data)
 		fmt.Println(data.Status, data.Information["message"])
+
+		if data.Status == module.STATUS_PRODUCT_FOUND {
+			start = time.Now()
+		}
 
 		if data.Status == module.STATUS_CHECKED_OUT {
 			fmt.Println(msg.Payload)
 		}
 
 		if data.Status == module.STATUS_STOPPED {
+			fmt.Println(time.Since(start))
 			return
 		}
 	}

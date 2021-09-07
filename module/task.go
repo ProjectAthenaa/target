@@ -85,8 +85,6 @@ func (tk *Task) GetSession() {
 	}()
 }
 
-//	tk.NearestStore sets a storeid field of tk, you can do some db stuff if you want to cache, its stil called
-//	before monitor so no worries if not
 func (tk *Task) Flow() {
 	//defer func() {
 	//	if err := recover(); err != nil {
@@ -103,7 +101,6 @@ func (tk *Task) Flow() {
 		tk.ATC,
 		tk.SubmitShipping, //remove once better implementation is done, kiwi you did good job :)
 		tk.SubmitCVV,      //remove once better implementation is done, this seems to be mandatory regardless if theres a payment or not
-		//tk.PaymentOauth,   //do we really need it?
 		tk.SubmitCheckout,
 	}
 
