@@ -16,7 +16,7 @@ func (tk *Task) ATC() {
 		tk.Stop()
 		return
 	}
-	req.Headers = tk.GenerateDefaultHeaders(fmt.Sprintf("https://www.target.com/p/*/%s", tk.Data.Metadata[*config.Module.Fields[0].FieldKey]))
+	req.Headers = tk.GenerateDefaultHeaders(fmt.Sprintf("https://www.target.com/p/-/%s", tk.Data.Metadata[*config.Module.Fields[0].FieldKey]))
 
 	res, err := tk.Do(req)
 	if err != nil {
