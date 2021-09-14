@@ -9,7 +9,7 @@ import (
 var Module *sonic.Module
 
 func init() {
-	var name = "target"
+	var name = "Target"
 
 	if podName := os.Getenv("POD_NAME"); podName != "" {
 		name = strings.Split(podName, "-")[0]
