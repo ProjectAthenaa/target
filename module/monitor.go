@@ -27,7 +27,8 @@ type StockInfo struct {
 }
 
 func (tk *Task) InitData() {
-	req, err := tk.NewRequest("GET", tk.Data.Metadata[*config.Module.Fields[0].FieldKey], nil)
+
+	req, err := tk.NewRequest("GET", fmt.Sprintf("https://www.target.com/p/*/%s", tk.Data.Metadata[*config.Module.Fields[0].FieldKey]), nil)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "could not fetch product page")
 		tk.Stop()

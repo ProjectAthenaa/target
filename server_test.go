@@ -37,7 +37,7 @@ func init() {
 func TestModule(t *testing.T) {
 	subToken, controlToken := uuid.NewString(), uuid.NewString()
 
-	productlink := "https://www.target.com/p/chuckle-38-roar-pop-it-fidget-and-sensory-game-tie-dye/-/A-81969353"
+	productID := "A-81969353"
 
 	//:::
 	username := "1moewci2"
@@ -94,13 +94,12 @@ func TestModule(t *testing.T) {
 			RandomColor: false,
 			Color:       []string{"1"},
 			Size:        []string{"1"},
-			Link:        &productlink,
 		},
 		Metadata: map[string]string{
 			"username":                        "terrydavis903@gmail.com",
 			"password":                        "0o0p0o0P!!",
 			"UserID":                          "e99fa929-f1f2-4aad-b782-bfe6772fb2fc",
-			*config.Module.Fields[0].FieldKey: productlink,
+			*config.Module.Fields[0].FieldKey: productID,
 		},
 		Channels: &module.Channels{
 			UpdatesChannel:  subToken,

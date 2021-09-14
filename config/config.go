@@ -8,16 +8,16 @@ import (
 var Module *sonic.Module
 
 func init() {
-	fieldKey := "LOOKUP_link"
+	fieldKey := "LOOKUP_pid"
 
 	Module = &sonic.Module{
 		Name:     string(product.SiteTarget),
 		Accounts: true,
 		Fields: []*sonic.ModuleField{
 			{
-				Validation: "https:\\/\\/www\\.target\\.com\\/p\\/.*\\/-\\/A-\\d+",
+				Validation: "A-\\d+",
 				Type:       sonic.FieldTypeText,
-				Label:      "Product Link",
+				Label:      "Product ID",
 				FieldKey:   &fieldKey,
 			},
 		},
