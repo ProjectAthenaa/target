@@ -15,7 +15,7 @@ func init() {
 		Accounts: true,
 		Fields: []*sonic.ModuleField{
 			{
-				Validation: "A-\\d+",
+				Validation: `A-\d+`,
 				Type:       sonic.FieldTypeText,
 				Label:      "Product ID",
 				FieldKey:   &fieldKey,
