@@ -15,7 +15,7 @@ require (
 	entgo.io/ent v0.9.1 // indirect
 	github.com/99designs/gqlgen v0.14.0 // indirect
 	github.com/DataDog/zstd v1.4.8 // indirect
-	github.com/ProjectAthenaa/sonic-core v0.0.0-20210914020022-da2ec577c57d // indirect
+	github.com/ProjectAthenaa/sonic-core v0.0.0-20210914022353-dc7874452409 // indirect
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20210912230133-d1bdfacee922 // indirect
