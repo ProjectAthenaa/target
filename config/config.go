@@ -18,7 +18,8 @@ func init() {
 	fieldKey := "LOOKUP_link"
 
 	Module = &sonic.Module{
-		Name: name,
+		Name:     name,
+		Accounts: true,
 		Fields: []*sonic.ModuleField{
 			{
 				Validation: "https:\\/\\/www\\.target\\.com\\/p\\/.*\\/-\\/A-\\d+",

@@ -86,12 +86,12 @@ func (tk *Task) GetSession() {
 }
 
 func (tk *Task) Flow() {
-	//defer func() {
-	//	if err := recover(); err != nil {
-	//		tk.SetStatus(module.STATUS_ERROR, "internal error")
-	//		tk.Stop()
-	//	}
-	//}()
+	defer func() {
+		if err := recover(); err != nil {
+			tk.SetStatus(module.STATUS_ERROR, "internal error")
+			tk.Stop()
+		}
+	}()
 	funcArr := []func(){
 		tk.InitData,     //InitData and NearestStore have to be done before monitoring as they fill in critical variables like apikey and storeid
 		tk.NearestStore, //add cache for nearest store?
