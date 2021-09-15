@@ -56,7 +56,7 @@ func (tk *Task) OnPause() error {
 }
 func (tk *Task) OnStopping() {
 	tk.FastClient.Destroy()
-	//panic("")
+	panic("")
 	return
 }
 
