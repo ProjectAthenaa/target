@@ -5,6 +5,7 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/base"
 	"github.com/ProjectAthenaa/sonic-core/sonic/face"
+	"github.com/prometheus/common/log"
 	"sync"
 )
 
@@ -86,13 +87,13 @@ func (tk *Task) GetSession() {
 }
 
 func (tk *Task) Flow() {
-	//defer func() {
-	//	if err := recover(); err != nil {
-	//		log.Error(err)
-	//		tk.SetStatus(module.STATUS_ERROR, "internal error")
-	//		tk.Stop()
-	//	}
-	//}()
+	defer func() {
+		if err := recover(); err != nil {
+			log.Error(err)
+			tk.SetStatus(module.STATUS_ERROR, "internal error")
+			tk.Stop()
+		}
+	}()
 
 	funcArr := []func(){
 		tk.InitData,     //InitData and NearestStore have to be done before monitoring as they fill in critical variables like apikey and storeid
