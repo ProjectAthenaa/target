@@ -15,7 +15,7 @@ require (
 	entgo.io/ent v0.9.1 // indirect
 	github.com/99designs/gqlgen v0.14.0 // indirect
 	github.com/DataDog/zstd v1.4.8 // indirect
-	github.com/ProjectAthenaa/sonic-core v0.0.0-20210914201947-99b89628f6d0 // indirect
+	github.com/ProjectAthenaa/sonic-core v0.0.0-20210915060955-1234794b904b // indirect
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20210912230133-d1bdfacee922 // indirect
@@ -27,6 +27,7 @@ require (
 	github.com/go-bindata/go-bindata v1.0.1-0.20190711162640-ee3c2418e368 // indirect
 	github.com/go-openapi/inflect v0.19.0 // indirect
 	github.com/go-redis/redis/v8 v8.11.3 // indirect
+	github.com/go-redsync/redsync/v4 v4.4.1 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/graphql-go/graphql v0.8.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect

@@ -5,6 +5,7 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/base"
 	"github.com/ProjectAthenaa/sonic-core/sonic/face"
+	"github.com/prometheus/common/log"
 	"sync"
 )
 
@@ -91,6 +92,8 @@ func (tk *Task) Flow() {
 			tk.Stop()
 		}
 	}()
+
+	log.Info(tk.Data.Channels.UpdatesChannel)
 
 	funcArr := []func(){
 		tk.InitData,     //InitData and NearestStore have to be done before monitoring as they fill in critical variables like apikey and storeid
