@@ -36,6 +36,12 @@ func (tk *Task) NearestStore() {
 		return
 	}
 
+	if strings.Contains(string(res.Body), `"closest_eligible_store":null`) {
+		tk.SetStatus(module.STATUS_ERROR, "Location not supported")
+		tk.Stop()
+		return
+	}
+
 	tk.storeid = locationIdRe.FindStringSubmatch(string(res.Body))[1]
 
 	go func() {
