@@ -37,6 +37,7 @@ func (tk *Task) NearestStore() {
 		return
 	}
 
+	log.Println(fmt.Sprintf("https://api.target.com/shipt_deliveries/v1/stores?zip=%s&key=%s", tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.apikey))
 	log.Println(string(res.Body))
 
 	tk.storeid = locationIdRe.FindStringSubmatch(string(res.Body))[1]
