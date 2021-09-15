@@ -90,7 +90,7 @@ func (tk *Task) Flow() {
 	defer func() {
 		if err := recover(); err != nil {
 			log.Error(err)
-			tk.SetStatus(module.STATUS_ERROR, "internal error")
+			tk.SetStatus(module.STATUS_ERROR, "internal error", err)
 			tk.Stop()
 		}
 	}()
