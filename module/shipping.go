@@ -5,6 +5,7 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/core"
 	"github.com/ProjectAthenaa/threatmatrix"
+	"log"
 	"strings"
 	"time"
 )
@@ -35,6 +36,8 @@ func (tk *Task) NearestStore() {
 		tk.NearestStore()
 		return
 	}
+
+	log.Println(string(res.Body))
 
 	tk.storeid = locationIdRe.FindStringSubmatch(string(res.Body))[1]
 
