@@ -7,7 +7,6 @@ import (
 	"regexp"
 	"sync"
 	"sync/atomic"
-	"time"
 )
 
 var (
@@ -60,8 +59,6 @@ func (tk *Task) WaitForInstock() {
 
 	const GET = "GET"
 	req, err := tk.NewRequest(GET, monitorURL, nil)
-
-	time.Sleep(time.Second * 10)
 
 	for i := 0; i < 5; i++ {
 		wg.Add(1)
