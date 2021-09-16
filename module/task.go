@@ -5,6 +5,7 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/base"
 	"github.com/ProjectAthenaa/sonic-core/sonic/face"
+	"github.com/ProjectAthenaa/target/config"
 	"github.com/prometheus/common/log"
 	"sync"
 )
@@ -48,7 +49,8 @@ func (tk *Task) OnStarting() {
 	tk.FastClient.CreateCookieJar()
 	tk.FastClient.Jar.Set("UserLocation", fmt.Sprintf(`%s|||%s|%s`, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.Country))
 	tk.FastClient.Jar.Set("hasApp", "false")
-
+	tk.ReturningFields.Size = "OneSize"
+	tk.ReturningFields.ProductName = tk.Data.Metadata[*config.Module.Fields[0].FieldKey]
 	tk.Flow()
 }
 func (tk *Task) OnPause() error {

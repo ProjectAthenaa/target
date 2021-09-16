@@ -47,6 +47,8 @@ func (tk *Task) InitData() {
 	tk.imagelink = string(imageRe.FindSubmatch(res.Body)[1])
 	tk.pid = string(tcinRe.FindSubmatch(res.Body)[1])
 	tk.apikey = apikeyRe.FindStringSubmatch(string(res.Body))[1]
+
+	tk.ReturningFields.ProductImage = tk.imagelink
 }
 
 func (tk *Task) WaitForInstock() {
