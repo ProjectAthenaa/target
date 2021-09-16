@@ -41,6 +41,8 @@ github.com/ProjectAthenaa/sonic-core v0.0.0-20210916133127-0bd1abf0e5a9 h1:TrLlU
 github.com/ProjectAthenaa/sonic-core v0.0.0-20210916133127-0bd1abf0e5a9/go.mod h1:mw4aPsWcDicwj8Vy9JdXT1kQkdc/fYzSSrzrig6WTP8=
 github.com/ProjectAthenaa/sonic-core v0.0.0-20210916134653-47fb0e9aaaea h1:AkXCRozw8qaWoil1ctdnVj+Xd15ZIzL8NGIjwy/NJqc=
 github.com/ProjectAthenaa/sonic-core v0.0.0-20210916134653-47fb0e9aaaea/go.mod h1:mw4aPsWcDicwj8Vy9JdXT1kQkdc/fYzSSrzrig6WTP8=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210916142634-413a1ca52cca h1:AqAUvmAn1eCP4xuBAx3n5Sv9n6JWZ69mF584mpBpXTo=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210916142634-413a1ca52cca/go.mod h1:mw4aPsWcDicwj8Vy9JdXT1kQkdc/fYzSSrzrig6WTP8=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210906090801-f7bcf1d84eed h1:YXfpOOXkkNltMA82z8sAjycXa8LLA2S3c7sG9U1MvNE=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210906090801-f7bcf1d84eed/go.mod h1:YPiuOPVnpYHYM1zIK6wiy43mzTuAUkT9b5K8fAL6Rk8=
 github.com/agnivade/levenshtein v1.0.1/go.mod h1:CURSv5d9Uaml+FovSIICkLbAUZ9S4RqaHDIsdSBg7lM=
