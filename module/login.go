@@ -77,7 +77,7 @@ func (tk *Task) GetResString() *string {
 
 	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com")
 
-	res, err := tk.FastClient.Do(req)
+	res, err := tk.FastClient.DoCtx(tk.Ctx, req)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "couldnt get base script for ponos")
 		tk.Stop()
@@ -94,7 +94,7 @@ func (tk *Task) GetResString() *string {
 	tk.FastClient.ResetH2()
 
 	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com/login?client_id=ecom-web-1.0.0&ui_namespace=ui-default&back_button_action=browser&keep_me_signed_in=true&kmsi_default=false&actions=create_session_signin")
-	res, err = tk.FastClient.Do(req)
+	res, err = tk.FastClient.DoCtx(tk.Ctx, req)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR)
 		tk.Stop()

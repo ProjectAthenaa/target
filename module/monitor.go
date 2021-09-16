@@ -76,7 +76,7 @@ func (tk *Task) WaitForInstock() {
 					return
 				}
 
-				res, err := tk.FastClient.Do(&monitorReq)
+				res, err := tk.FastClient.DoCtx(tk.Ctx, &monitorReq)
 				if err != nil {
 					tk.SetStatus(module.STATUS_ERROR, err.Error())
 					tk.Stop()
