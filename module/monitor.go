@@ -12,7 +12,7 @@ import (
 var (
 	imageRe = regexp.MustCompile(`"og:image" content=("https://target.scene7.com/is/image/Target/GUEST_[^\"]+?")`)
 	tcinRe  = regexp.MustCompile(`"tcin":"(\d+?)"`)
-	nameRe 	= regexp.MustCompile(`>(\w+) : Target</title`)
+	nameRe  = regexp.MustCompile(`>(\w+) : Target</title`)
 )
 
 type StockInfo struct {
@@ -44,8 +44,10 @@ func (tk *Task) InitData() {
 		tk.Stop()
 		return
 	}
-	tk.ReturningFields.ProductName = string(nameRe.FindSubmatch(res.Body)[1])
 
+	fmt.Println(nameRe.FindSubmatch(res.Body))
+
+	//tk.ReturningFields.ProductName = string(nameRe.FindSubmatch(res.Body)[1])
 	tk.imagelink = string(imageRe.FindSubmatch(res.Body)[1])
 	tk.pid = string(tcinRe.FindSubmatch(res.Body)[1])
 	tk.apikey = apikeyRe.FindStringSubmatch(string(res.Body))[1]
