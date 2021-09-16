@@ -30,6 +30,7 @@ func (tk *Task) RefreshCartId() {
 		tk.paymentinstructionid = string(v[1])
 		tk.ReturningFields.Price = string(orderTotalRe.FindSubmatch(res.Body)[1])
 	} else {
+		fmt.Println(orderTotalRe.FindStringSubmatch(string(res.Body)))
 		tk.ReturningFields.Price = string(orderTotalRe.FindSubmatch(res.Body)[1])
 		tk.SubmitPayment()
 	}
