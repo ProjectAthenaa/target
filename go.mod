@@ -3,7 +3,6 @@ module github.com/ProjectAthenaa/target
 go 1.17
 
 require (
-	github.com/ProjectAthenaa/sonic-core v0.0.0-20210916123128-ffacb198bd28
 	github.com/ProjectAthenaa/threatmatrix v0.0.0-20210906090801-f7bcf1d84eed
 	github.com/google/uuid v1.3.0
 	github.com/json-iterator/go v1.1.11
@@ -16,6 +15,7 @@ require (
 	entgo.io/ent v0.9.1 // indirect
 	github.com/99designs/gqlgen v0.14.0 // indirect
 	github.com/DataDog/zstd v1.4.8 // indirect
+	github.com/ProjectAthenaa/sonic-core v0.0.0-20210916130444-516771ebc0c6 // indirect
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20210912230133-d1bdfacee922 // indirect
