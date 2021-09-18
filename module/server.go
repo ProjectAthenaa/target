@@ -2,6 +2,7 @@ package module
 
 import (
 	"context"
+	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic"
 	"github.com/ProjectAthenaa/sonic-core/sonic/antibots/shape"
@@ -19,23 +20,14 @@ func init() {
 	if os.Getenv("DEBUG") == "1" {
 		shapeClient, err = sonic.NewShapeClient("localhost:3000")
 		if err != nil {
-			goto cloudClient
+			panic(err)
 		}
-
-		_, err = shapeClient.GenHeaders(context.Background(), nil)
-		if sonic.ErrorContains(err, "Error while dialing dial tcp [::1]:3000") {
-			goto cloudClient
-		}
-
-		return
 	}
 
-cloudClient:
 	shapeClient, err = sonic.NewShapeClient()
 	if err != nil {
 		panic(err)
 	}
-
 }
 
 func (s Server) Task(_ context.Context, data *module.Data) (*module.StartResponse, error) {
@@ -45,6 +37,8 @@ func (s Server) Task(_ context.Context, data *module.Data) (*module.StartRespons
 	if err := task.Start(data); err != nil {
 		return nil, err
 	}
+
+	fmt.Println("Card Number: ", data.Profile.Billing.Number)
 
 	return &module.StartResponse{Started: true}, nil
 }
