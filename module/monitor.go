@@ -94,5 +94,11 @@ func (tk *Task) WaitForInstock() {
 	}
 
 	wg.Wait()
+	select {
+	case <-tk.Ctx.Done():
+		return
+	default:
+		break
+	}
 	tk.SetStatus(module.STATUS_PRODUCT_FOUND)
 }
