@@ -110,7 +110,6 @@ func (tk *Task) Flow() {
 	for _, f := range funcArr {
 		select {
 		case <-tk.Ctx.Done():
-			tk.sessionLock.Unlock()
 			return
 		default:
 			f()
