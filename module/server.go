@@ -22,9 +22,15 @@ func init() {
 			panic(err)
 		}
 
+		_, err = shapeClient.GenHeaders(context.Background(), nil)
+		if sonic.ErrorContains(err, "Error while dialing dial tcp [::1]:3000") {
+			goto cloudClient
+		}
+
 		return
 	}
 
+cloudClient:
 	shapeClient, err = sonic.NewShapeClient()
 	if err != nil {
 		panic(err)
