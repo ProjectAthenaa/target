@@ -121,8 +121,7 @@ func (tk *Task) Login() {
 	headers, err := shapeClient.GenHeaders(tk.Ctx, &shape.Site{Value: shape.SITE_TARGET, ResString: tk.GetResString()})
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "error generating shape headers")
-		tk.logincount++
-		tk.Login()
+		tk.Stop()
 		return
 	}
 
