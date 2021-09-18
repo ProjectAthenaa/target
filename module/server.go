@@ -19,12 +19,8 @@ func init() {
 	if os.Getenv("DEBUG") == "1" {
 		shapeClient, err = sonic.NewShapeClient("localhost:3000")
 		if err != nil {
-			if sonic.ErrorContains(err, "Debug modes need custom address") {
-				goto cloudClient
-			}
-			panic(err)
+			goto cloudClient
 		}
-
 		_, err = shapeClient.GenHeaders(context.Background(), nil)
 		if sonic.ErrorContains(err, "Error while dialing dial tcp [::1]:3000") {
 			goto cloudClient
@@ -41,13 +37,14 @@ cloudClient:
 
 }
 
-func (s Server) Task(_ context.Context, data *module.Data) (*module.StartResponse, error) {
-	//v, _ := json.Marshal(data)
-	//fmt.Println(string(v))
-	task := NewTask(data)
-	if err := task.Start(data); err != nil {
-		return nil, err
-	}
+func (s Server) Task(_
+context.Context, data * module.Data) (*module.StartResponse, error) {
+//v, _ := json.Marshal(data)
+//fmt.Println(string(v))
+task := NewTask(data)
+if err := task.Start(data); err != nil {
+return nil, err
+}
 
-	return &module.StartResponse{Started: true}, nil
+return &module.StartResponse{Started: true}, nil
 }
