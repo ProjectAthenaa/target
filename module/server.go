@@ -1,7 +1,6 @@
 package module
 
 import (
-	"context"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic"
 	"github.com/ProjectAthenaa/sonic-core/sonic/antibots/shape"
@@ -19,7 +18,7 @@ func init() {
 	if os.Getenv("DEBUG") == "1" {
 		shapeClient, err = sonic.NewShapeClient("localhost:3000")
 		if err != nil {
-			if sonic.ErrorContains(err, "panic: Debug modes need custom address") {
+			if sonic.ErrorContains(err, "Debug modes need custom address") {
 				goto cloudClient
 			}
 			panic(err)
