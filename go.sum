@@ -45,6 +45,12 @@ github.com/ProjectAthenaa/sonic-core v0.0.0-20210916142634-413a1ca52cca h1:AqAUv
 github.com/ProjectAthenaa/sonic-core v0.0.0-20210916142634-413a1ca52cca/go.mod h1:mw4aPsWcDicwj8Vy9JdXT1kQkdc/fYzSSrzrig6WTP8=
 github.com/ProjectAthenaa/sonic-core v0.0.0-20210916144121-c1881f52a40e h1:jFTQpJhC2RE7W0C7EIagJw+cn5PuywLGVeRNXWncvNY=
 github.com/ProjectAthenaa/sonic-core v0.0.0-20210916144121-c1881f52a40e/go.mod h1:mw4aPsWcDicwj8Vy9JdXT1kQkdc/fYzSSrzrig6WTP8=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210918110741-1bbf26505431 h1:Od3NCiVJ+reHRRPSdd9xKNa64EVTAqnMmc37bMtJhfI=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210918110741-1bbf26505431/go.mod h1:mw4aPsWcDicwj8Vy9JdXT1kQkdc/fYzSSrzrig6WTP8=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210918110855-ef70f39bba3a h1:DyC630UVEXUbPfuVv6YTUSCA/ou1EMVKYuLrs1NstYg=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210918110855-ef70f39bba3a/go.mod h1:mw4aPsWcDicwj8Vy9JdXT1kQkdc/fYzSSrzrig6WTP8=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210918111029-a56772afde45 h1:rkKx6ay6YfDSVRhJpxuLPdigXMPZf7awMb8baFnm2Wk=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210918111029-a56772afde45/go.mod h1:mw4aPsWcDicwj8Vy9JdXT1kQkdc/fYzSSrzrig6WTP8=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210906090801-f7bcf1d84eed h1:YXfpOOXkkNltMA82z8sAjycXa8LLA2S3c7sG9U1MvNE=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210906090801-f7bcf1d84eed/go.mod h1:YPiuOPVnpYHYM1zIK6wiy43mzTuAUkT9b5K8fAL6Rk8=
 github.com/agnivade/levenshtein v1.0.1/go.mod h1:CURSv5d9Uaml+FovSIICkLbAUZ9S4RqaHDIsdSBg7lM=
@@ -620,6 +626,8 @@ google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013/go.mod h1:NbSheEEY
 google.golang.org/genproto v0.0.0-20210303154014-9728d6b83eeb/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
 google.golang.org/genproto v0.0.0-20210915214522-86cf1236ec46 h1:dUeqvtUQy6Xh63UIs6Jgkj/97+qWYZ+Gf52HXC0rojE=
 google.golang.org/genproto v0.0.0-20210915214522-86cf1236ec46/go.mod h1:eFjDcFEctNawg4eG61bRv87N7iHBWyVhJu7u1kqDUXY=
+google.golang.org/genproto v0.0.0-20210917145530-b395a37504d4 h1:ysnBoUyeL/H6RCvNRhWHjKoDEmguI+mPU+qHgK8qv/w=
+google.golang.org/genproto v0.0.0-20210917145530-b395a37504d4/go.mod h1:eFjDcFEctNawg4eG61bRv87N7iHBWyVhJu7u1kqDUXY=
 google.golang.org/grpc v1.19.0/go.mod h1:mqu4LbDTu4XGKhr4mRzUsmM4RtVoemTSY81AxZiDr8c=
 google.golang.org/grpc v1.20.1/go.mod h1:10oTOabMzJvdu6/UiuZezV6QK5dSlG84ov/aaiqXj38=
 google.golang.org/grpc v1.21.1/go.mod h1:oYelfM1adQP15Ek0mdvEgi9Df8B9CZIaU1084ijfRaM=
