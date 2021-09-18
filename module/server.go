@@ -19,6 +19,9 @@ func init() {
 	if os.Getenv("DEBUG") == "1" {
 		shapeClient, err = sonic.NewShapeClient("localhost:3000")
 		if err != nil {
+			if sonic.ErrorContains(err, "panic: Debug modes need custom address") {
+				goto cloudClient
+			}
 			panic(err)
 		}
 
