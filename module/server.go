@@ -22,6 +22,7 @@ func init() {
 		if err != nil {
 			panic(err)
 		}
+		return
 	}
 
 	shapeClient, err = sonic.NewShapeClient()

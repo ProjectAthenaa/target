@@ -11,7 +11,7 @@ import (
 
 var (
 	imageRe = regexp.MustCompile(`"og:image" content=("https://target.scene7.com/is/image/Target/GUEST_[^\"]+?")`)
-	tcinRe  = regexp.MustCompile(`"tcin":"(\d+?)"`)
+	skuRe  = regexp.MustCompile(`"sku":"(\d+?)"`)
 	nameRe  = regexp.MustCompile(`{"twitter":{"title":"([\w ]+)`)
 )
 
@@ -47,9 +47,8 @@ func (tk *Task) InitData() {
 
 	tk.ReturningFields.ProductName = string(nameRe.FindSubmatch(res.Body)[1])
 	tk.imagelink = string(imageRe.FindSubmatch(res.Body)[1])
-	tk.pid = string(tcinRe.FindSubmatch(res.Body)[1])
 	tk.apikey = apikeyRe.FindStringSubmatch(string(res.Body))[1]
-
+	tk.pid = string(skuRe.FindSubmatch(res.Body)[1])
 	tk.ReturningFields.ProductImage = tk.imagelink
 }
 
@@ -83,6 +82,7 @@ func (tk *Task) WaitForInstock() {
 					return
 				}
 				go func() {
+
 					var instock *StockInfo
 					_ = json.Unmarshal(res.Body, &instock)
 					if instock.Data.Product.Fulfillment.ShippingOptions.AvailabilityStatus == "IN_STOCK" {

@@ -54,15 +54,11 @@ func (tk *Task) OauthSession() {
 	}
 	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com/co-login")
 
-	res, err := tk.Do(req)
+	_, err = tk.Do(req)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "could not get oauth2 second request")
 		tk.Stop()
 		return
-	}
-
-	if v := authCodeRe.FindSubmatch(res.Body); len(v) == 2 {
-		tk.authcode = string(v[1])
 	}
 
 }

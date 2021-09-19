@@ -29,6 +29,7 @@ func (tk *Task) RefreshCartId() {
 	if v := paymentInstructionRe.FindSubmatch(res.Body); len(v) == 2 {
 		tk.paymentinstructionid = string(v[1])
 		tk.ReturningFields.Price = string(orderTotalRe.FindSubmatch(res.Body)[1])
+		tk.CompareCard()
 	} else {
 		fmt.Println(orderTotalRe.FindStringSubmatch(string(res.Body)))
 		tk.ReturningFields.Price = string(orderTotalRe.FindSubmatch(res.Body)[1])

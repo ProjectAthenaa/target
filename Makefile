@@ -23,3 +23,6 @@ deploy:
 	echo "Rolled out updates"
 	echo ""
 	echo "Deployment Done!"
+
+tidy:
+	go mod tidy -compat=1.17
