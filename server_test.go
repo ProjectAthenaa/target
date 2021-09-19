@@ -95,7 +95,7 @@ func TestModule(t *testing.T) {
 			Size:        []string{"1"},
 		},
 		Metadata: map[string]string{
-			"username":                        "ui2ininij2@gmail.com",
+			"username":                        "dwaimodiwu@gmail.com",
 			"password":                        "0o0p0o0P.",
 			"UserID":                          "e99fa929-f1f2-4aad-b782-bfe6772fb2fc",
 			*config.Module.Fields[0].FieldKey: productID,
