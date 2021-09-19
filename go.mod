@@ -3,10 +3,10 @@ module github.com/ProjectAthenaa/target
 go 1.17
 
 require (
+	github.com/ProjectAthenaa/sonic-core v0.0.0-20210919045629-1f2078734ec0
 	github.com/ProjectAthenaa/threatmatrix v0.0.0-20210906090801-f7bcf1d84eed
 	github.com/google/uuid v1.3.0
 	github.com/json-iterator/go v1.1.11
-	github.com/prometheus/common v0.4.0
 	google.golang.org/grpc v1.40.0
 )
 
@@ -15,7 +15,6 @@ require (
 	entgo.io/ent v0.9.1 // indirect
 	github.com/99designs/gqlgen v0.14.0 // indirect
 	github.com/DataDog/zstd v1.4.8 // indirect
-	github.com/ProjectAthenaa/sonic-core v0.0.0-20210919045629-1f2078734ec0 // indirect
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20210912230133-d1bdfacee922 // indirect
@@ -37,6 +36,7 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/prometheus/common v0.4.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/thoas/go-funk v0.9.1 // indirect
 	github.com/useflyent/fhttp v0.0.0-20210801005649-f160dd923789 // indirect
