@@ -42,7 +42,11 @@ func (tk *Task) ATC() {
 		return
 	}
 
-	fmt.Println(string(res.Body))
+	if v := checkoutErrRe.FindStringSubmatch(string(res.Body)); len(v) == 0 {
+		tk.SetStatus(module.STATUS_CHECKOUT_ERROR, v[1])
+		tk.Stop()
+		return
+	}
 
 	tk.cartid = cartIdRe.FindStringSubmatch(string(res.Body))[1]
 	tk.cartitemid = cartItemIdRe.FindStringSubmatch(string(res.Body))[1]

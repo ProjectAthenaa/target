@@ -2,7 +2,6 @@ package module
 
 import (
 	"context"
-	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic"
 	"github.com/ProjectAthenaa/sonic-core/sonic/antibots/shape"
@@ -30,7 +29,7 @@ func init() {
 		panic(err)
 	}
 }
-
+	
 func (s Server) Task(_ context.Context, data *module.Data) (*module.StartResponse, error) {
 	//v, _ := json.Marshal(data)
 	//fmt.Println(string(v))
@@ -38,10 +37,6 @@ func (s Server) Task(_ context.Context, data *module.Data) (*module.StartRespons
 	if err := task.Start(data); err != nil {
 		return nil, err
 	}
-
-	fmt.Println("Card Number: ", data.Profile.Billing.Number)
-	fmt.Println("Expiry Month / Expiry Year: ", data.Profile.Billing.ExpirationMonth, "/", data.Profile.Billing.ExpirationYear)
-	fmt.Println("CVV: ", data.Profile.Billing.CVV)
 
 	return &module.StartResponse{Started: true}, nil
 }
