@@ -101,9 +101,17 @@ func (tk *Task) Flow() {
 	funcArr := []func(){
 		tk.InitData,     //InitData and NearestStore have to be done before monitoring as they fill in critical variables like apikey and storeid
 		tk.NearestStore, //add cache for nearest store?
-		tk.GetSession,
+		tk.OauthPost,
+		tk.OauthSession,
+		tk.AuthRedirect,
+		tk.Login,
+		tk.AuthCode,
+		tk.OauthAuthCode,
+		tk.ClearCart,
+		tk.CheckDetails,
+		tk.OauthSession,
 		tk.WaitForInstock, //monitoring
-		tk.sessionLock.Lock,
+		//tk.sessionLock.Lock,
 		tk.ATC,
 		tk.RefreshCartId,  //do we really need it?   //optimise get session
 		tk.SubmitShipping, //remove once better implementation is done, kiwi you did good job :)
