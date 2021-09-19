@@ -6,8 +6,8 @@ import (
 	"github.com/ProjectAthenaa/target/config"
 )
 
-func (tk *Task) AddTax(){
-	req, err := tk.NewRequest("PUT", fmt.Sprintf(`https://carts.target.com/web_checkouts/v1/cart?field_groups=ADDRESSES%%2CCART_ITEMS%%2CCART%%2CSUMMARY%%2CFINANCE_PROVIDERS&key=%s`, tk.apikey),[]byte(fmt.Sprintf(`{"cart_type":"REGULAR","channel_id":10,"shopping_context":"DIGITAL","guest_location":{"state":"%s","latitude":"","zip_code":"%s","longitude":"","country":"US"},"shopping_location_id":"%s"}`, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.storeid)))
+func (tk *Task) AddTax() {
+	req, err := tk.NewRequest("PUT", fmt.Sprintf(`https://carts.target.com/web_checkouts/v1/cart?field_groups=ADDRESSES%%2CCART_ITEMS%%2CCART%%2CSUMMARY%%2CFINANCE_PROVIDERS&key=%s`, tk.apikey), []byte(fmt.Sprintf(`{"cart_type":"REGULAR","channel_id":10,"shopping_context":"DIGITAL","guest_location":{"state":"%s","latitude":"","zip_code":"%s","longitude":"","country":"US"},"shopping_location_id":"%s"}`, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.storeid)))
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "error creating tax request")
 		tk.Stop()
@@ -38,6 +38,12 @@ func (tk *Task) ATC() {
 	res, err := tk.Do(req)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "error making atc request")
+		tk.Stop()
+		return
+	}
+
+	if v := checkoutErrRe.FindStringSubmatch(string(res.Body)); len(v) == 0 {
+		tk.SetStatus(module.STATUS_CHECKOUT_ERROR, v[1])
 		tk.Stop()
 		return
 	}

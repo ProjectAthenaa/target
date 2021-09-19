@@ -25,7 +25,7 @@ type Task struct {
 	imagelink            string
 	submitCVV            bool
 	submitAddress        bool
-	redirectcode		 string
+	redirectcode         string
 	sessionLock          *sync.Mutex
 }
 
@@ -63,39 +63,13 @@ func (tk *Task) OnStopping() {
 	return
 }
 
-//func (tk *Task) GetSession() {
-//	go func() {
-//		tk.sessionLock.Lock()
-//		defer tk.sessionLock.Unlock()
-//		funcArr := []func(){
-//			tk.OauthPost,
-//			tk.OauthSession,
-//			tk.Login,
-//			tk.ClearCart,
-//			tk.CheckDetails,
-//			tk.OauthSession,
-//			tk.OauthAuthCode,
-//			tk.RefreshCartId, //do we really need it?
-//		}
-//
-//		for _, f := range funcArr {
-//			select {
-//			case <-tk.Ctx.Done():
-//				return
-//			default:
-//				f()
-//			}
-//		}
-//	}()
-//}
-
 func (tk *Task) Flow() {
-	//defer func() {
-	//	if err := recover(); err != nil {
-	//		tk.SetStatus(module.STATUS_ERROR, "internal error", err)
-	//		tk.Stop()
-	//	}
-	//}()
+	defer func() {
+		if err := recover(); err != nil {
+			tk.SetStatus(module.STATUS_ERROR, "internal error", err)
+			tk.Stop()
+		}
+	}()
 
 	funcArr := []func(){
 		tk.InitData,     //InitData and NearestStore have to be done before monitoring as they fill in critical variables like apikey and storeid
@@ -112,7 +86,7 @@ func (tk *Task) Flow() {
 		tk.WaitForInstock, //monitoring
 		//tk.sessionLock.Lock,
 		tk.ATC,
-		tk.RefreshCartId, //do we really need it?   //optimise get session
+		tk.RefreshCartId,  //do we really need it?   //optimise get session
 		tk.SubmitShipping, //remove once better implementation is done, kiwi you did good job :)
 		tk.SubmitCVV,      //remove once better implementation is done, this seems to be mandatory regardless if theres a payment or not
 		tk.SubmitCheckout,

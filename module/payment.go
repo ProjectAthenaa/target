@@ -106,7 +106,12 @@ func (tk *Task) CompareCard() {
 	if strings.Contains(string(res.Body), "SUCCESS") {
 		tk.SetStatus(module.STATUS_CHECKING_OUT, "card valid")
 	} else {
-		tk.SetStatus(module.STATUS_CHECKOUT_DECLINE, "card not valid")
+		if v := messageRe.FindStringSubmatch(string(res.Body)); len(v) >= 2 {
+			tk.SetStatus(module.STATUS_CHECKOUT_ERROR, v[1])
+		} else {
+			tk.SetStatus(module.STATUS_CHECKOUT_ERROR, "invalid card")
+		}
+
 		tk.Stop()
 		return
 	}
