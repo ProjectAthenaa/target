@@ -111,7 +111,7 @@ func (tk *Task) ClearCart() {
 		return
 	}
 	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com")
-	
+
 	res, err := tk.Do(req)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "could not post clear cart request")
@@ -144,6 +144,7 @@ func (tk *Task) ClearCart() {
 
 			if delres.StatusCode != 200 {
 				tk.SetStatus(module.STATUS_ERROR, "could not delete item "+string(sm[1]))
+				tk.Stop()
 			}
 		}()
 	}

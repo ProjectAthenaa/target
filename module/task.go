@@ -63,40 +63,13 @@ func (tk *Task) OnStopping() {
 	return
 }
 
-func (tk *Task) GetSession() {
-	go func() {
-		tk.sessionLock.Lock()
-		defer tk.sessionLock.Unlock()
-		funcArr := []func(){
-			tk.OauthPost,
-			tk.OauthSession,
-			tk.AuthRedirect,
-			tk.Login,
-			tk.AuthCode,
-			tk.OauthAuthCode,
-			tk.ClearCart,
-			tk.CheckDetails,
-			tk.OauthSession,
-		}
-
-		for _, f := range funcArr {
-			select {
-			case <-tk.Ctx.Done():
-				return
-			default:
-				f()
-			}
+func (tk *Task) Flow() {
+	defer func() {
+		if err := recover(); err != nil {
+			tk.SetStatus(module.STATUS_ERROR, "internal error", err)
+			tk.Stop()
 		}
 	}()
-}
-
-func (tk *Task) Flow() {
-	//defer func() {
-	//	if err := recover(); err != nil {
-	//		tk.SetStatus(module.STATUS_ERROR, "internal error", err)
-	//		tk.Stop()
-	//	}
-	//}()
 
 	funcArr := []func(){
 		tk.InitData,     //InitData and NearestStore have to be done before monitoring as they fill in critical variables like apikey and storeid
