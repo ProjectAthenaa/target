@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	if err := log.Base().SetFormat("logger:stdout?json=true"); err != nil {
+	if err := log.Base().SetFormat("logger:stdout"); err != nil {
 		log.Fatalln(err)
 	}
 	if err := sonic.RegisterModule(config.Module); err != nil {
