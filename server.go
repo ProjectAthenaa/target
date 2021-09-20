@@ -1,6 +1,7 @@
 package main
 
 import (
+	log "github.com/ProjectAthenaa/sonic-core/logs"
 	"github.com/ProjectAthenaa/sonic-core/sonic"
 	"github.com/ProjectAthenaa/sonic-core/sonic/core"
 	"github.com/ProjectAthenaa/target/config"
@@ -8,11 +9,14 @@ import (
 )
 
 func init() {
+	if err := log.Base().SetFormat("json"); err != nil {
+		log.Fatalln(err)
+	}
 	if err := sonic.RegisterModule(config.Module); err != nil {
 		panic(err)
 	}
 }
 
 func main() {
-	core.RegisterModuleServer(config.Module.Name, &moduleServer.Server{})
+	core.ListenAndServe(config.Module.Name, &moduleServer.Server{})
 }
