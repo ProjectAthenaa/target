@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-func (tk *Task) APIKey() {
-	req, err := tk.NewRequest("GET", "https://www.target.com/", nil)
+func (tk *Task) CartAPIKey() {
+	req, err := tk.NewRequest("GET", "https://www.target.com/co-cart", nil)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "could not make homepage req")
 		tk.Stop()
@@ -25,7 +25,7 @@ func (tk *Task) APIKey() {
 		return
 	}
 
-	tk.apikey = apikeyRe.FindStringSubmatch(string(res.Body))[1]
+	tk.cartApiKey = cartApiKeyRe.FindStringSubmatch(string(res.Body))[1]
 }
 
 func (tk *Task) OauthPost() {

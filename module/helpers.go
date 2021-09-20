@@ -4,6 +4,7 @@ import (
 	"fmt"
 	http "github.com/ProjectAthenaa/sonic-core/fasttls"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
+	"github.com/ProjectAthenaa/target/config"
 	"github.com/json-iterator/go"
 	"log"
 	"regexp"
@@ -21,6 +22,7 @@ var (
 	locationIdRe         = regexp.MustCompile(`"location_id":"(\d+)"`)
 	guestIdRe            = regexp.MustCompile(`"targetGuid":"(\d+)"`)
 	apikeyRe             = regexp.MustCompile(`"apiKey":"(\w+)"`)
+	cartApiKeyRe		 = regexp.MustCompile(`carts\.target\.com","apiKey":"(\w+)"`)
 	loginErrRe           = regexp.MustCompile(`"errorKey":"(\w+)"`)
 	totalCountRe         = regexp.MustCompile(`"total_count":(\d+)`)
 	checkoutErrRe        = regexp.MustCompile(`"code":\s*"([\w-]+)"`)
@@ -103,13 +105,13 @@ func (tk *Task) OauthAuthCode() {
 }
 
 func (tk *Task) ClearCart() {
-	req, err := tk.NewRequest("GET", fmt.Sprintf("https://carts.target.com/web_checkouts/v1/cart_views?cart_type=SFL&field_groups=CART%%2CCART_ITEMS%%2CSUMMARY&key=%s", tk.apikey), nil)
+	req, err := tk.NewRequest("PUT", fmt.Sprintf(`https://carts.target.com/web_checkouts/v1/cart?field_groups=ADDRESSES%%2CCART_ITEMS%%2CCART%%2CSUMMARY%%2CFINANCE_PROVIDERS&key=%s`, tk.cartApiKey),[]byte(fmt.Sprintf(`{"cart_type":"REGULAR","channel_id":10,"shopping_context":"DIGITAL","guest_location":{"state":"%s","latitude":"","zip_code":"%s","longitude":"","country":"US"},"shopping_location_id":"%s"}`, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.storeid)))
 	if err != nil {
-		tk.SetStatus(module.STATUS_ERROR, "could not create clear cart request")
+		tk.SetStatus(module.STATUS_ERROR, "error creating tax request")
 		tk.Stop()
 		return
 	}
-	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com")
+	req.Headers = tk.GenerateDefaultHeaders(fmt.Sprintf("https://www.target.com/p/-/A-%s", tk.Data.Metadata[*config.Module.Fields[0].FieldKey]))
 
 	//	cookiejar.ReleaseCookieJar(tk.FastClient.Jar)
 	//	tk.FastClient.Jar = nil
@@ -135,7 +137,7 @@ func (tk *Task) ClearCart() {
 	for _, sm := range cartItemIdRe.FindAllSubmatch(res.Body, -1) {
 		sm := sm
 		go func() {
-			delreq, delerr := tk.NewRequest("DELETE", fmt.Sprintf(`https://carts.target.com/web_checkouts/v1/cart_items/%s?cart_type=REGULAR&field_groups=CART%%2CCART_ITEMS%%2CSUMMARY%%2CPROMOTION_CODES%%2CADDRESSES&key=%s`, string(sm[1]), tk.apikey), nil)
+			delreq, delerr := tk.NewRequest("DELETE", fmt.Sprintf(`https://carts.target.com/web_checkouts/v1/cart_items/%s?cart_type=REGULAR&field_groups=CART%%2CCART_ITEMS%%2CSUMMARY%%2CPROMOTION_CODES%%2CADDRESSES&key=%s`, string(sm[1]), tk.cartApiKey), nil)
 			if delerr != nil {
 				tk.SetStatus(module.STATUS_ERROR, "could not create clear cart request")
 				tk.Stop()
