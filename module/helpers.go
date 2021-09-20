@@ -6,7 +6,6 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/target/config"
 	"github.com/json-iterator/go"
-	"log"
 	"regexp"
 	"time"
 )
@@ -22,11 +21,11 @@ var (
 	locationIdRe         = regexp.MustCompile(`"location_id":"(\d+)"`)
 	guestIdRe            = regexp.MustCompile(`"targetGuid":"(\d+)"`)
 	apikeyRe             = regexp.MustCompile(`"apiKey":"(\w+)"`)
-	cartApiKeyRe		 = regexp.MustCompile(`carts\.target\.com","apiKey":"(\w+)"`)
+	cartApiKeyRe         = regexp.MustCompile(`carts\.target\.com","apiKey":"(\w+)"`)
 	loginErrRe           = regexp.MustCompile(`"errorKey":"(\w+)"`)
 	totalCountRe         = regexp.MustCompile(`"total_count":(\d+)`)
 	checkoutErrRe        = regexp.MustCompile(`"code":\s*"([\w-]+)"`)
-	redirectCodeRe		 = regexp.MustCompile(`code=([\w-]+)&`)
+	redirectCodeRe       = regexp.MustCompile(`code=([\w-]+)&`)
 	json                 = jsoniter.ConfigFastest
 )
 
@@ -105,7 +104,7 @@ func (tk *Task) OauthAuthCode() {
 }
 
 func (tk *Task) ClearCart() {
-	req, err := tk.NewRequest("PUT", fmt.Sprintf(`https://carts.target.com/web_checkouts/v1/cart?field_groups=ADDRESSES%%2CCART_ITEMS%%2CCART%%2CSUMMARY%%2CFINANCE_PROVIDERS&key=%s`, tk.cartApiKey),[]byte(fmt.Sprintf(`{"cart_type":"REGULAR","channel_id":10,"shopping_context":"DIGITAL","guest_location":{"state":"%s","latitude":"","zip_code":"%s","longitude":"","country":"US"},"shopping_location_id":"%s"}`, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.storeid)))
+	req, err := tk.NewRequest("PUT", fmt.Sprintf(`https://carts.target.com/web_checkouts/v1/cart?field_groups=ADDRESSES%%2CCART_ITEMS%%2CCART%%2CSUMMARY%%2CFINANCE_PROVIDERS&key=%s`, tk.cartApiKey), []byte(fmt.Sprintf(`{"cart_type":"REGULAR","channel_id":10,"shopping_context":"DIGITAL","guest_location":{"state":"%s","latitude":"","zip_code":"%s","longitude":"","country":"US"},"shopping_location_id":"%s"}`, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.storeid)))
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "error creating tax request")
 		tk.Stop()
@@ -197,13 +196,12 @@ func (tk *Task) CheckDetails() {
 		tk.Stop()
 	}
 
-	log.Println(totalCountRe.FindStringSubmatch(string(res.Body))[1])
 	if match := totalCountRe.FindStringSubmatch(string(res.Body)); len(match) == 2 && match[1] >= "1" {
 		tk.submitAddress = false
 	}
 }
 
-func (tk *Task) AuthRedirect(){
+func (tk *Task) AuthRedirect() {
 	req, err := tk.NewRequest("GET", fmt.Sprintf(`https://gsp.target.com/gsp/authentications/v1/auth_codes?client_id=ecom-web-1.0.0&state=%d&redirect_uri=https%%3A%%2F%%2Fwww.target.com%%2F&assurance_level=M`, time.Now().Unix()), nil)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "could not get auth code")
@@ -222,7 +220,7 @@ func (tk *Task) AuthRedirect(){
 
 }
 
-func (tk *Task) AuthCode(){
+func (tk *Task) AuthCode() {
 	req, err := tk.NewRequest("GET", `https://gsp.target.com/gsp/authentications/v1/auth_codes?client_id=ecom-web-1.0.0`, nil)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "could not get auth code")
@@ -238,7 +236,7 @@ func (tk *Task) AuthCode(){
 		tk.Stop()
 	}
 
-	if res.StatusCode == 302{
+	if res.StatusCode == 302 {
 		tk.redirectcode = redirectCodeRe.FindStringSubmatch(res.Headers["Location"][0])[1]
 	}
 }
