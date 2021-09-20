@@ -100,13 +100,13 @@ func (tk *Task) CompareCard() {
 		return
 	}
 
-	if strings.Contains(string(res.Body), "SUCCESS") {
-		tk.SetStatus(module.STATUS_CHECKING_OUT, "card valid")
-	} else {
-		tk.SetStatus(module.STATUS_CHECKOUT_DECLINE, "card not valid")
-		tk.Stop()
-		return
-	}
+	//if strings.Contains(string(res.Body), "SUCCESS") {
+	//	tk.SetStatus(module.STATUS_CHECKING_OUT, "card valid")
+	//} else {
+	//	tk.SetStatus(module.STATUS_CHECKOUT_DECLINE, "card not valid")
+	//	tk.Stop()
+	//	return
+	//}
 }
 
 func (tk *Task) SubmitCVV() {
