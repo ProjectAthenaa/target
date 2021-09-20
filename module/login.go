@@ -25,7 +25,11 @@ func (tk *Task) CartAPIKey() {
 		return
 	}
 
-	tk.cartApiKey = cartApiKeyRe.FindStringSubmatch(string(res.Body))[1]
+	if res.StatusCode == 302{
+		tk.cartApiKey = `feaf228eb2777fd3eee0fd5192ae7107d6224b39`
+	}else{
+		tk.cartApiKey = cartApiKeyRe.FindStringSubmatch(string(res.Body))[1]
+	}
 }
 
 func (tk *Task) OauthPost() {

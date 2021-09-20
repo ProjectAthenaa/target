@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/target/config"
+	"log"
 	"regexp"
 	"sync"
 	"sync/atomic"
@@ -49,6 +50,7 @@ func (tk *Task) InitData() {
 	tk.imagelink = string(imageRe.FindSubmatch(res.Body)[1])
 	tk.apikey = apikeyRe.FindStringSubmatch(string(res.Body))[1]
 	tk.pid = string(skuRe.FindSubmatch(res.Body)[1])
+	log.Println(tk.pid)
 	tk.ReturningFields.ProductImage = tk.imagelink
 }
 

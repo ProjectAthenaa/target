@@ -105,7 +105,7 @@ func (tk *Task) OauthAuthCode() {
 }
 
 func (tk *Task) ClearCart() {
-	req, err := tk.NewRequest("PUT", fmt.Sprintf(`https://carts.target.com/web_checkouts/v1/cart?field_groups=ADDRESSES%%2CCART_ITEMS%%2CCART%%2CSUMMARY%%2CFINANCE_PROVIDERS&key=%s`, tk.cartApiKey),[]byte(fmt.Sprintf(`{"cart_type":"REGULAR","channel_id":10,"shopping_context":"DIGITAL","guest_location":{"state":"%s","latitude":"","zip_code":"%s","longitude":"","country":"US"},"shopping_location_id":"%s"}`, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.storeid)))
+	req, err := tk.NewRequest("PUT", fmt.Sprintf(`https://carts.target.com/web_checkouts/v1/cart?field_groups=ADDRESSES%%2CCART_ITEMS%%2CCART%%2CSUMMARY%%2CFINANCE_PROVIDERS&key=%s`, tk.cartApiKey),[]byte(fmt.Sprintf(`{"cart_type":"REGULAR","channel_id":"10","shopping_context":"DIGITAL","guest_location":{"state":"%s","latitude":"","zip_code":"%s","longitude":"","country":"US"},"shopping_location_id":"%s"}`, tk.Data.Profile.Shipping.ShippingAddress.StateCode, tk.Data.Profile.Shipping.ShippingAddress.ZIP, tk.storeid)))
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "error creating tax request")
 		tk.Stop()
@@ -154,6 +154,8 @@ func (tk *Task) ClearCart() {
 
 			if delres.StatusCode != 200 {
 				tk.SetStatus(module.STATUS_ERROR, "could not delete item "+string(sm[1]))
+				tk.Stop()
+				return
 			}
 		}()
 	}

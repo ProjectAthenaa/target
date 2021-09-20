@@ -65,12 +65,12 @@ func (tk *Task) OnStopping() {
 }
 
 func (tk *Task) Flow() {
-	defer func() {
-		if err := recover(); err != nil {
-			tk.SetStatus(module.STATUS_ERROR, "internal error", err)
-			tk.Stop()
-		}
-	}()
+	//defer func() {
+	//	if err := recover(); err != nil {
+	//		tk.SetStatus(module.STATUS_ERROR, "internal error", err)
+	//		tk.Stop()
+	//	}
+	//}()
 
 	funcArr := []func(){
 		tk.InitData,     //InitData and NearestStore have to be done before monitoring as they fill in critical variables like apikey and storeid
@@ -89,8 +89,10 @@ func (tk *Task) Flow() {
 		//tk.sessionLock.Lock,
 		tk.ATC,
 		tk.RefreshCartId,  //do we really need it?   //optimise get session
+		tk.SubmitPayment,
 		tk.SubmitShipping, //remove once better implementation is done, kiwi you did good job :)
 		tk.SubmitCVV,      //remove once better implementation is done, this seems to be mandatory regardless if theres a payment or not
+		tk.CompareCard,
 		tk.SubmitCheckout,
 	}
 

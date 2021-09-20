@@ -37,7 +37,7 @@ func init() {
 func TestModule(t *testing.T) {
 	subToken, controlToken := uuid.NewString(), uuid.NewString()
 
-	productID := "82849784"
+	productID := "78808342"
 
 	// 1moewci2:4k7cvljz:178.159.147.248:65112
 	//username := "1moewci2"
@@ -76,10 +76,10 @@ func TestModule(t *testing.T) {
 				BillingIsShipping: true,
 			},
 			Billing: &module.Billing{
-				Number:          "4207670236068972",
-				ExpirationMonth: "05",
-				ExpirationYear:  "25",
-				CVV:             "997",
+				Number:          "4207670259298100",
+				ExpirationMonth: "06",
+				ExpirationYear:  "26",
+				CVV:             "109",
 			},
 		},
 		Proxy: &module.Proxy{
@@ -95,7 +95,7 @@ func TestModule(t *testing.T) {
 			Size:        []string{"1"},
 		},
 		Metadata: map[string]string{
-			"username":                        "dwaimodiwu@gmail.com",
+			"username":                        "dnwuiadiuwan@gmail.com",
 			"password":                        "0o0p0o0P.",
 			"UserID":                          "e99fa929-f1f2-4aad-b782-bfe6772fb2fc",
 			*config.Module.Fields[0].FieldKey: productID,
