@@ -16,6 +16,7 @@ type Task struct {
 	logincount           int
 	pid                  string
 	apikey               string
+	cartApiKey			 string
 	cartid               string
 	cartitemid           string
 	storeid              string
@@ -78,6 +79,7 @@ func (tk *Task) Flow() {
 		tk.OauthSession,
 		tk.AuthRedirect,
 		tk.Login,
+		tk.CartAPIKey,
 		tk.AuthCode,
 		tk.OauthAuthCode,
 		tk.ClearCart,
