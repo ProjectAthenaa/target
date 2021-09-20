@@ -204,13 +204,13 @@ func (tk *Task) AuthRedirect() {
 
 	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com/")
 
-	res, err := tk.Do(req)
+	_, err = tk.Do(req)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "could not get auth code")
 		tk.Stop()
+		return
 	}
 
-	log.Println(res.StatusCode)
 }
 
 func (tk *Task) AuthCode() {
