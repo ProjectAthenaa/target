@@ -6,6 +6,7 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/sonic/base"
 	"github.com/ProjectAthenaa/sonic-core/sonic/face"
 	"github.com/ProjectAthenaa/target/config"
+	"github.com/prometheus/common/log"
 	"sync"
 )
 
@@ -16,7 +17,7 @@ type Task struct {
 	logincount           int
 	pid                  string
 	apikey               string
-	cartApiKey			 string
+	cartApiKey           string
 	cartid               string
 	cartitemid           string
 	storeid              string
@@ -65,12 +66,13 @@ func (tk *Task) OnStopping() {
 }
 
 func (tk *Task) Flow() {
-	//defer func() {
-	//	if err := recover(); err != nil {
-	//		tk.SetStatus(module.STATUS_ERROR, "internal error", err)
-	//		tk.Stop()
-	//	}
-	//}()
+	defer func() {
+		if err := recover(); err != nil {
+			log.Error("recovered: ", err)
+			tk.SetStatus(module.STATUS_ERROR, "internal error")
+			tk.Stop()
+		}
+	}()
 
 	funcArr := []func(){
 		tk.InitData,     //InitData and NearestStore have to be done before monitoring as they fill in critical variables like apikey and storeid

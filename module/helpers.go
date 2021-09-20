@@ -6,7 +6,6 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/target/config"
 	"github.com/json-iterator/go"
-	"log"
 	"regexp"
 	"time"
 )
@@ -22,11 +21,11 @@ var (
 	locationIdRe         = regexp.MustCompile(`"location_id":"(\d+)"`)
 	guestIdRe            = regexp.MustCompile(`"targetGuid":"(\d+)"`)
 	apikeyRe             = regexp.MustCompile(`"apiKey":"(\w+)"`)
-	cartApiKeyRe		 = regexp.MustCompile(`carts\.target\.com","apiKey":"(\w+)"`)
+	cartApiKeyRe         = regexp.MustCompile(`carts\.target\.com","apiKey":"(\w+)"`)
 	loginErrRe           = regexp.MustCompile(`"errorKey":"(\w+)"`)
 	totalCountRe         = regexp.MustCompile(`"total_count":(\d+)`)
 	checkoutErrRe        = regexp.MustCompile(`"code":\s*"([\w-]+)"`)
-	redirectCodeRe		 = regexp.MustCompile(`code=([\w-]+)&`)
+	redirectCodeRe       = regexp.MustCompile(`code=([\w-]+)&`)
 	json                 = jsoniter.ConfigFastest
 )
 
@@ -199,13 +198,12 @@ func (tk *Task) CheckDetails() {
 		tk.Stop()
 	}
 
-	log.Println(totalCountRe.FindStringSubmatch(string(res.Body))[1])
 	if match := totalCountRe.FindStringSubmatch(string(res.Body)); len(match) == 2 && match[1] >= "1" {
 		tk.submitAddress = false
 	}
 }
 
-func (tk *Task) AuthRedirect(){
+func (tk *Task) AuthRedirect() {
 	req, err := tk.NewRequest("GET", fmt.Sprintf(`https://gsp.target.com/gsp/authentications/v1/auth_codes?client_id=ecom-web-1.0.0&state=%d&redirect_uri=https%%3A%%2F%%2Fwww.target.com%%2F&assurance_level=M`, time.Now().Unix()), nil)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "could not get auth code")
@@ -215,16 +213,16 @@ func (tk *Task) AuthRedirect(){
 
 	req.Headers = tk.GenerateDefaultHeaders("https://www.target.com/")
 
-	res, err := tk.Do(req)
+	_, err = tk.Do(req)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "could not get auth code")
 		tk.Stop()
+		return
 	}
 
-	log.Println(res.StatusCode)
 }
 
-func (tk *Task) AuthCode(){
+func (tk *Task) AuthCode() {
 	req, err := tk.NewRequest("GET", `https://gsp.target.com/gsp/authentications/v1/auth_codes?client_id=ecom-web-1.0.0`, nil)
 	if err != nil {
 		tk.SetStatus(module.STATUS_ERROR, "could not get auth code")
@@ -240,7 +238,7 @@ func (tk *Task) AuthCode(){
 		tk.Stop()
 	}
 
-	if res.StatusCode == 302{
+	if res.StatusCode == 302 {
 		tk.redirectcode = redirectCodeRe.FindStringSubmatch(res.Headers["Location"][0])[1]
 	}
 }
