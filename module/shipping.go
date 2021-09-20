@@ -81,5 +81,8 @@ func (tk *Task) SubmitShipping() {
 	if strings.Contains(string(res.Body), "ADDRESS_ALREADY_PRESENT") {
 		return
 	}
-	go threatmatrix.SendRequests(string(referenceIdRe.FindSubmatch(res.Body)[1]), tk.FormatProxy())
+	sm := referenceIdRe.FindSubmatch(res.Body)
+	if len(sm) > 0{
+		go threatmatrix.SendRequests(string(sm[1]), tk.FormatProxy())
+	}
 }
