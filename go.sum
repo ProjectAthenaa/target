@@ -31,6 +31,8 @@ github.com/ProjectAthenaa/sonic-core v0.0.0-20210920150725-4db84fb735b4 h1:bkmuQ
 github.com/ProjectAthenaa/sonic-core v0.0.0-20210920150725-4db84fb735b4/go.mod h1:QyQEpaGTyrsDoa1Qj+ov4t6Fj9/1RwHudlT+RIKZAU0=
 github.com/ProjectAthenaa/sonic-core v0.0.0-20210920152750-e13be9af0da8 h1:YRADl1UZE6UtKhZiyJ0tPzYXfYXCj+CzGLieAM0WnBM=
 github.com/ProjectAthenaa/sonic-core v0.0.0-20210920152750-e13be9af0da8/go.mod h1:QyQEpaGTyrsDoa1Qj+ov4t6Fj9/1RwHudlT+RIKZAU0=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210922172716-434adaacac47 h1:n+BFDmOrI7R/auK6J9Ggn/pgfkUiZbqQBy33q3Cz5vY=
+github.com/ProjectAthenaa/sonic-core v0.0.0-20210922172716-434adaacac47/go.mod h1:QyQEpaGTyrsDoa1Qj+ov4t6Fj9/1RwHudlT+RIKZAU0=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210906090801-f7bcf1d84eed h1:YXfpOOXkkNltMA82z8sAjycXa8LLA2S3c7sG9U1MvNE=
 github.com/ProjectAthenaa/threatmatrix v0.0.0-20210906090801-f7bcf1d84eed/go.mod h1:YPiuOPVnpYHYM1zIK6wiy43mzTuAUkT9b5K8fAL6Rk8=
 github.com/agnivade/levenshtein v1.0.1/go.mod h1:CURSv5d9Uaml+FovSIICkLbAUZ9S4RqaHDIsdSBg7lM=
@@ -611,6 +613,8 @@ google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013/go.mod h1:NbSheEEY
 google.golang.org/genproto v0.0.0-20210303154014-9728d6b83eeb/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
 google.golang.org/genproto v0.0.0-20210917145530-b395a37504d4 h1:ysnBoUyeL/H6RCvNRhWHjKoDEmguI+mPU+qHgK8qv/w=
 google.golang.org/genproto v0.0.0-20210917145530-b395a37504d4/go.mod h1:eFjDcFEctNawg4eG61bRv87N7iHBWyVhJu7u1kqDUXY=
+google.golang.org/genproto v0.0.0-20210921142501-181ce0d877f6 h1:2ncG/LajxmrclaZH+ppVi02rQxz4eXYJzGHdFN4Y9UA=
+google.golang.org/genproto v0.0.0-20210921142501-181ce0d877f6/go.mod h1:5CzLGKJ67TSI2B9POpiiyGha0AjJvZIUgRMt1dSmuhc=
 google.golang.org/grpc v1.19.0/go.mod h1:mqu4LbDTu4XGKhr4mRzUsmM4RtVoemTSY81AxZiDr8c=
 google.golang.org/grpc v1.20.1/go.mod h1:10oTOabMzJvdu6/UiuZezV6QK5dSlG84ov/aaiqXj38=
 google.golang.org/grpc v1.21.1/go.mod h1:oYelfM1adQP15Ek0mdvEgi9Df8B9CZIaU1084ijfRaM=

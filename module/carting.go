@@ -5,7 +5,6 @@ import (
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/antibots/shape"
 	"github.com/ProjectAthenaa/target/config"
-	"log"
 )
 
 func (tk *Task) ATC() {
@@ -21,7 +20,6 @@ func (tk *Task) ATC() {
 	req.Headers = tk.GenerateDefaultHeaders(fmt.Sprintf("https://www.target.com/p/-/A-%s", tk.Data.Metadata[*config.Module.Fields[0].FieldKey]))
 	headers, err := shapeClient.GenHeaders(tk.Ctx, &shape.Site{Value: shape.SITE_TARGET, ResString: tk.GetResString()})
 	if err != nil {
-		log.Println(err)
 		tk.SetStatus(module.STATUS_ERROR, "error generating shape headers")
 		tk.Stop()
 		return

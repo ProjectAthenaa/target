@@ -3,7 +3,7 @@ module github.com/ProjectAthenaa/target
 go 1.17
 
 require (
-	github.com/ProjectAthenaa/sonic-core v0.0.0-20210920152750-e13be9af0da8
+	github.com/ProjectAthenaa/sonic-core v0.0.0-20210922172716-434adaacac47
 	github.com/ProjectAthenaa/threatmatrix v0.0.0-20210906090801-f7bcf1d84eed
 	github.com/google/uuid v1.3.0
 	github.com/json-iterator/go v1.1.11
@@ -56,7 +56,7 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/tools v0.1.5 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
-	google.golang.org/genproto v0.0.0-20210917145530-b395a37504d4 // indirect
+	google.golang.org/genproto v0.0.0-20210921142501-181ce0d877f6 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
