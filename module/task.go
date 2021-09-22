@@ -2,6 +2,7 @@ package module
 
 import (
 	"fmt"
+	log "github.com/ProjectAthenaa/sonic-core/logs"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/sonic-core/sonic/base"
 	"github.com/ProjectAthenaa/sonic-core/sonic/face"
@@ -65,13 +66,19 @@ func (tk *Task) OnStopping() {
 }
 
 func (tk *Task) Flow() {
-	//defer func() {
-	//	if err := recover(); err != nil {
-	//		log.Error("recovered: ", err)
-	//		tk.SetStatus(module.STATUS_ERROR, "internal error")
-	//		tk.Stop()
-	//	}
-	//}()
+	defer func() {
+		if err := recover(); err != nil {
+			log.Error("recovered: ", err)
+			tk.SetStatus(module.STATUS_ERROR, "internal error")
+			tk.Stop()
+		}
+	}()
+
+	defer func() {
+		if err := tk.Stop(); err != nil {
+			log.Errorf("error stopping task: ", fmt.Sprint(err))
+		}
+	}()
 
 	funcArr := []func(){
 		tk.InitData,     //InitData and NearestStore have to be done before monitoring as they fill in critical variables like apikey and storeid
@@ -89,7 +96,7 @@ func (tk *Task) Flow() {
 		tk.WaitForInstock, //monitoring
 		//tk.sessionLock.Lock,
 		tk.ATC,
-		tk.RefreshCartId,  //do we really need it?   //optimise get session
+		tk.RefreshCartId, //do we really need it?   //optimise get session
 		tk.SubmitPayment,
 		tk.SubmitShipping, //remove once better implementation is done, kiwi you did good job :)
 		tk.SubmitCVV,      //remove once better implementation is done, this seems to be mandatory regardless if theres a payment or not
