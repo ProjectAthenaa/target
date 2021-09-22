@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/ProjectAthenaa/sonic-core/protos/module"
 	"github.com/ProjectAthenaa/target/config"
-	"log"
 	"regexp"
 	"sync"
 	"sync/atomic"
@@ -12,7 +11,7 @@ import (
 
 var (
 	imageRe = regexp.MustCompile(`"og:image" content=("https://target.scene7.com/is/image/Target/GUEST_[^\"]+?")`)
-	skuRe  = regexp.MustCompile(`"sku":"(\d+?)"`)
+	skuRe   = regexp.MustCompile(`"sku":"(\d+?)"`)
 	nameRe  = regexp.MustCompile(`{"twitter":{"title":"([\w ]+)`)
 )
 
@@ -50,7 +49,7 @@ func (tk *Task) InitData() {
 	tk.imagelink = string(imageRe.FindSubmatch(res.Body)[1])
 	tk.apikey = apikeyRe.FindStringSubmatch(string(res.Body))[1]
 	tk.pid = string(skuRe.FindSubmatch(res.Body)[1])
-	log.Println(tk.pid)
+	//log.Println(tk.pid)
 	tk.ReturningFields.ProductImage = tk.imagelink
 }
 
