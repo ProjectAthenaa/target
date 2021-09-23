@@ -75,9 +75,7 @@ func (tk *Task) Flow() {
 	}()
 
 	defer func() {
-		if err := tk.Stop(); err != nil {
-			log.Errorf("error stopping task: ", fmt.Sprint(err))
-		}
+		tk.Stop()
 	}()
 
 	funcArr := []func(){
