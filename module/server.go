@@ -31,16 +31,11 @@ func init() {
 }
 
 func (s Server) Task(_ context.Context, data *module.Data) (*module.StartResponse, error) {
-	//v, _ := json.Marshal(data)
-	//fmt.Println(string(v))
+
 	task := NewTask(data)
 	if err := task.Start(data); err != nil {
 		return nil, err
 	}
-
-	//fmt.Println("Number: ", data.Profile.Billing.Number)
-	//fmt.Println("Expiration Month/Expiration Year: ", data.Profile.Billing.ExpirationMonth, "/", data.Profile.Billing.ExpirationYear)
-	//fmt.Println("CVV: ", data.Profile.Billing.CVV)
 
 	return &module.StartResponse{Started: true}, nil
 }

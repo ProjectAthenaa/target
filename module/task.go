@@ -66,13 +66,13 @@ func (tk *Task) OnStopping() {
 }
 
 func (tk *Task) Flow() {
-	defer func() {
-		if err := recover(); err != nil {
-			log.Error("recovered: ", err)
-			tk.SetStatus(module.STATUS_ERROR, "internal error")
-			tk.Stop()
-		}
-	}()
+	//defer func() {
+	//	if err := recover(); err != nil {
+	//		log.Error("recovered: ", err)
+	//		tk.SetStatus(module.STATUS_ERROR, "internal error")
+	//		tk.Stop()
+	//	}
+	//}()
 
 	defer func() {
 		tk.Stop()
