@@ -44,7 +44,7 @@ func (tk *Task) InitData() {
 		tk.Stop()
 		return
 	}
-
+	fmt.Println(string(res.Body))
 	tk.ReturningFields.ProductName = string(nameRe.FindSubmatch(res.Body)[1])
 	tk.imagelink = string(imageRe.FindSubmatch(res.Body)[1])
 	tk.apikey = apikeyRe.FindStringSubmatch(string(res.Body))[1]
